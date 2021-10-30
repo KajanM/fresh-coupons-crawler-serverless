@@ -1,4 +1,5 @@
 using Amazon.CDK;
+using Amazon.CDK.AWS.Lambda;
 
 namespace FreshCouponsBe
 {
@@ -6,7 +7,13 @@ namespace FreshCouponsBe
     {
         internal FreshCouponsBeStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
-            // The code that defines your stack goes here
+            new Function(this, "FetchAndSaveUdemyCoupons", new FunctionProps
+            {
+                Runtime = Runtime.DOTNET_CORE_3_1,
+                Code = Code.FromAsset(
+                    "./FetchAndSaveUdemyCouponsHandler/src/FetchAndSaveUdemyCouponsHandler/bin/Release/netcoreapp3.1/publish"),
+                Handler = "FetchAndSaveUdemyCouponsHandler::FetchAndSaveUdemyCouponsHandler.Function::FunctionHandler"
+            });
         }
     }
 }
