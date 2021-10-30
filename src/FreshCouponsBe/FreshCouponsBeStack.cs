@@ -9,6 +9,7 @@ namespace FreshCouponsBe
         {
             new Function(this, "FetchAndSaveUdemyCoupons", new FunctionProps
             {
+                FunctionName = "FetchAndSaveUdemyCoupons",
                 Runtime = Runtime.DOTNET_CORE_3_1,
                 Code = Code.FromAsset(
                     "./FetchAndSaveUdemyCouponsHandler/src/FetchAndSaveUdemyCouponsHandler/bin/Release/netcoreapp3.1/publish"),
