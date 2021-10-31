@@ -17,5 +17,9 @@
     <EmbeddedResource Include="resources\udemy-course-details.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Remove="resources\disk-udemy-listing.html" />
+    <EmbeddedResource Include="resources\disk-udemy-listing.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
