@@ -1,0 +1,116 @@
+﻿// https://www.udemy.com/api-2.0/course-landing-components/3482168/me/?components=buy_button,purchase,redeem_coupon,recommendation,discount_expiration,gift_this_course,available_coupons&discountCode=41012852OCT2021
+
+const coupon =
+  {
+    "buy_button": {
+      "button": {
+        "add_to_cart_redirect_url": "/cart/added/course/3482168/",
+        "base_express_checkout": "/cart/checkout/express/course/3482168/",
+        "enrollment_disabled": false,
+        "event_type": "enroll_now",
+        "icon": null,
+        "is_free_with_discount": true,
+        "require_popup": true,
+        "text": "Enroll now",
+        "buy_url": "/cart/checkout/express/course/3482168/?discountCode=41012852OCT2021",
+        "preview_url": "javascript:void(0)?couponCode=41012852OCT2021",
+        "payment_data": {
+          "buyableId": 3482168,
+          "buyableType": "course",
+          "discountInfo": {
+            "code": "41012852OCT2021"
+          },
+          "buyableContext": {
+            "contentLocaleId": null
+          },
+          "purchasePrice": {
+            "amount": 0.0,
+            "currency": "USD",
+            "price_string": "Free",
+            "currency_symbol": "$"
+          }
+        },
+        "size": "large",
+        "style": "primary",
+        "is_enabled": true
+      }
+    },
+    "purchase": {
+      "data": {
+        "is_valid_student": false,
+        "purchase_date": null,
+        "is_in_subscription": false,
+        "show_discount_info": true,
+        "pricing_result": {
+          "price_serve_tracking_id": "UBwQKj2JSq6gL8IG9G2kfQ",
+          "price": {
+            "amount": 0.0,
+            "currency": "USD",
+            "price_string": "Free",
+            "currency_symbol": "$"
+          },
+          "list_price": {
+            "amount": 19.99,
+            "currency": "USD",
+            "price_string": "$19.99",
+            "currency_symbol": "$"
+          },
+          "saving_price": {
+            "amount": 19.99,
+            "currency": "USD",
+            "price_string": "$19.99",
+            "currency_symbol": "$"
+          },
+          "has_discount_saving": true,
+          "discount_percent": 100,
+          "discount_percent_for_display": 100,
+          "buyable": {
+            "id": 3482168,
+            "type": "course"
+          },
+          "campaign": {
+            "code": "41012852OCT2021",
+            "end_time": "2021-10-30 16:29:04+00:00",
+            "is_instructor_created": true,
+            "is_public": true,
+            "start_time": "None",
+            "campaign_type": "instructor_coupon",
+            "uses_remaining": 36358,
+            "maximum_uses": 40000
+          },
+          "code": "41012852OCT2021",
+          "is_public": true
+        },
+        "course_id": 3482168,
+        "list_price": {
+          "amount": 19.99,
+          "currency": "USD",
+          "price_string": "$19.99",
+          "currency_symbol": "$"
+        },
+        "is_organization_only": false
+      }
+    },
+    "redeem_coupon": {
+      "discount_attempts": [
+        {
+          "code": "41012852OCT2021",
+          "status": "applied",
+          "details": null,
+          "amount": null
+        }
+      ],
+      "has_already_purchased": false
+    },
+    "discount_expiration": {
+      "data": {
+        "discount_deadline_text": "2 hours",
+        "is_enabled": true
+      }
+    },
+    "gift_this_course": {
+      "gift_this_course_link": "/gift/introduction-to-artificial-intelligence-in-the-workplace/?discountCode=41012852OCT2021&couponCode=41012852OCT2021",
+      "round": null
+    }
+  }
+

@@ -12,4 +12,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\FetchAndSaveUdemyCouponsHandler\FetchAndSaveUdemyCouponsHandler.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="resources\udemy-course-details.html" />
+    <EmbeddedResource Include="resources\udemy-course-details.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

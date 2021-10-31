@@ -11,6 +11,6 @@
   "framework": "netcoreapp3.1",
   "function-runtime": "dotnetcore3.1",
   "function-memory-size": 256,
-  "function-timeout": 120,
+  "function-timeout": 180,
   "function-handler": "FetchAndSaveUdemyCouponsHandler::FetchAndSaveUdemyCouponsHandler.Function::FunctionHandler"
 }
