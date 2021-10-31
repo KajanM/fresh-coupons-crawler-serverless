@@ -29,5 +29,27 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
 
             #endregion
         }
+
+        [Fact]
+        public void MapToCouponCodePageLinkShouldSucceed()
+        {
+            #region Arrange
+
+            var courseUrl = "https://www.discudemy.com/csharp/introduction-to-aspnet-core-razor-pages-net-6";
+
+            #endregion
+
+            #region Act
+
+            var couponCodePageLink = DiskUdemyHelper.MapToCouponCodePageLink(courseUrl)[0];
+
+            #endregion
+
+            #region Assert
+
+            couponCodePageLink.Equals("https://www.discudemy.com/go/introduction-to-aspnet-core-razor-pages-net-6");
+
+            #endregion
+        }
     }
 }

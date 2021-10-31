@@ -25,6 +25,12 @@ namespace FetchAndSaveUdemyCouponsHandler.Helpers
             return diskUdemyLinks;
         }
 
+        public static string[] MapToCouponCodePageLink(params string[] diskUdemyCourseLinks)
+        {
+            return diskUdemyCourseLinks.Select(l => $"https://www.discudemy.com/go/{l.Split("/")[^1]}")
+                .ToArray();
+        }
+
         private static class DomSelectors
         {
             public const string DiskUdemyCouponLink = ".card .card-header";
