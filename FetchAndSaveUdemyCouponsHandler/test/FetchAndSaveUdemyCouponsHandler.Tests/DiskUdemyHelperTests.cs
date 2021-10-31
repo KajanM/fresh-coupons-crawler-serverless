@@ -51,5 +51,53 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
 
             #endregion
         }
+
+        [Fact]
+        public async Task ParseCouponCodeLogicShallIgnoreFreeCourses()
+        {
+            #region Arrange
+
+            var testHtml = await File.ReadAllTextAsync("./resources/disk-udemy/free-course-details.html");
+
+            #endregion
+
+            #region Act
+
+            var (isCouponValid, couponDto) = await DiskUdemyHelper.ParseCouponDataAsync(testHtml);
+
+            #endregion
+
+            #region Assert
+
+            Assert.False(isCouponValid);
+            Assert.Null(couponDto);
+
+            #endregion
+        }
+
+        [Fact]
+        public async Task ParseCouponCodeLogicShallCorrectlyGetValidCoupon()
+        {
+            #region Arrange
+
+            var testHtml = await File.ReadAllTextAsync("./resources/disk-udemy/valid-coupon-code.html");
+
+            #endregion
+
+            #region Act
+
+            var (isCouponValid, couponDto) = await DiskUdemyHelper.ParseCouponDataAsync(testHtml);
+
+            #endregion
+
+            #region Assert
+
+            Assert.True(isCouponValid);
+            Assert.Equal("ARABIC-COURSE", couponDto.Coupon);
+            Assert.Equal("https://www.udemy.com/course/arabic-language-learn-to-read-arabic-through-short-stories",
+                couponDto.Url);
+
+            #endregion
+        }
     }
 }

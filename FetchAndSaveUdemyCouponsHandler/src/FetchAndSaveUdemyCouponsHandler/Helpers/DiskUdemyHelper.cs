@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Amazon.Lambda.Core;
 using AngleSharp;
 using AngleSharp.Html.Dom;
+using FetchAndSaveUdemyCouponsHandler.Dtos;
 
 namespace FetchAndSaveUdemyCouponsHandler.Helpers
 {
@@ -31,9 +34,30 @@ namespace FetchAndSaveUdemyCouponsHandler.Helpers
                 .ToArray();
         }
 
+        public static async Task<(bool isCouponValid, CouponDto? couponDto)> ParseCouponDataAsync(string couponPageHtmlStr,
+            IBrowsingContext browsingContext = null)
+        {
+            browsingContext ??= BrowsingContext.New(Configuration.Default);
+            var document = await browsingContext.OpenAsync(req => req.Content(couponPageHtmlStr));
+            var udemyLink = new Uri(((IHtmlAnchorElement)document.QuerySelector(DomSelectors.UdemyLinkWithCouponCode))
+                .Href);
+            var couponCode = HttpUtility.ParseQueryString(udemyLink.Query).Get("couponCode");
+            if (string.IsNullOrWhiteSpace(couponCode))
+            {
+                return (false, null);
+            }
+
+            return (true, new CouponDto
+            {
+                Url = udemyLink.GetLeftPart(UriPartial.Path)[..^1],
+                Coupon = couponCode
+            });
+        }
+
         private static class DomSelectors
         {
             public const string DiskUdemyCouponLink = ".card .card-header";
+            public const string UdemyLinkWithCouponCode = ".ui.segment>a";
         }
     }
 }
