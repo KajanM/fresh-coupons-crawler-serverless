@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace FetchAndSaveUdemyCouponsHandler.BindingModels
+namespace FetchAndSaveUdemyCouponsHandler.Udemy.BindingModels
 {
     public class InstructorsDataBindingModel
     {

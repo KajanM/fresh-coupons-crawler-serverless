@@ -1,4 +1,4 @@
-﻿namespace FetchAndSaveUdemyCouponsHandler.ViewModels
+﻿namespace FetchAndSaveUdemyCouponsHandler.Shared.ViewModels
 {
     public class CourseDetailsViewModel
     {
@@ -26,7 +26,6 @@
 
         public string[] Tags { get; set; }
 
-        public CouponData CouponData { get; set; }
 
         public Rating Rating { get; set; }
 
@@ -35,28 +34,13 @@
         public override string ToString()
         {
             return
-                $"{nameof(CourseId)}: {CourseId}, {nameof(Title)}: {Title}, {nameof(ShortDescription)}: {ShortDescription}, {nameof(LongDescription)}: {LongDescription}, {nameof(Language)}: {Language}, {nameof(CourseUri)}: {CourseUri}, {nameof(ImageUri)}: {ImageUri}, {nameof(Duration)}: {Duration}, {nameof(EnrolledStudentsCount)}: {EnrolledStudentsCount}, {nameof(LastUpdated)}: {LastUpdated}, {nameof(TargetAudiences)}: {TargetAudiences}, {nameof(Tags)}: {Tags}, {nameof(CouponData)}: {CouponData}, {nameof(Rating)}: {Rating}, {nameof(Instructors)}: {Instructors}";
-        }
-    }
-
-    public class CouponData
-    {
-        public string CouponCode { get; set; }
-
-        public double OriginalPrice { get; set; }
-
-        public double DiscountedPrice { get; set; }
-
-        public override string ToString()
-        {
-            return
-                $"{nameof(CouponCode)}: {CouponCode}, {nameof(OriginalPrice)}: {OriginalPrice}, {nameof(DiscountedPrice)}: {DiscountedPrice}";
+                $"{nameof(CourseId)}: {CourseId}, {nameof(Title)}: {Title}, {nameof(ShortDescription)}: {ShortDescription}, {nameof(LongDescription)}: {LongDescription}, {nameof(Language)}: {Language}, {nameof(CourseUri)}: {CourseUri}, {nameof(ImageUri)}: {ImageUri}, {nameof(Duration)}: {Duration}, {nameof(EnrolledStudentsCount)}: {EnrolledStudentsCount}, {nameof(LastUpdated)}: {LastUpdated}, {nameof(TargetAudiences)}: {TargetAudiences}, {nameof(Tags)}: {Tags}, {nameof(Rating)}: {Rating}, {nameof(Instructors)}: {Instructors}";
         }
     }
 
     public class Rating
     {
-        public int Count { get; set; }
+        public int? Count { get; set; }
 
         public string AverageValue { get; set; }
 
@@ -72,11 +56,11 @@
 
         public string Url { get; set; }
 
-        public int TotalNumberOfStudents { get; set; }
+        public int? TotalNumberOfStudents { get; set; }
 
-        public int TotalNumberOfReviews { get; set; }
+        public int? TotalNumberOfReviews { get; set; }
 
-        public double AverageRating { get; set; }
+        public double? AverageRating { get; set; }
 
         public override string ToString()
         {

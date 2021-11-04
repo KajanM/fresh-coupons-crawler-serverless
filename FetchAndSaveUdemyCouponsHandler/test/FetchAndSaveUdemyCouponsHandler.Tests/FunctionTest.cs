@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Amazon.Lambda.TestUtilities;
 using Xunit;
 using Xunit.Abstractions;
@@ -14,12 +15,34 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
         }
 
         [Fact]
-        public void TestToUpperFunction()
+        public async Task MainLogicShallExecuteAsExpected()
         {
-            // Invoke the lambda function and confirm the string was upper cased.
+            #region Arrange
+
             var function = new Function();
             var context = new TestLambdaContext();
-            var upperCase = function.FunctionHandler(context);
+            var args = new Function.FunctionArgs
+            {
+                NumberOfPagesToParse = 5
+            };
+
+            #endregion
+
+            #region Act
+
+            var courses = await function.FunctionHandler(args, context);
+
+            #endregion
+
+            #region Assert
+
+            courses.ForEach(c => _outputHelper.WriteLine(c.ToString()));
+            
+            Assert.NotEmpty(courses);
+            Assert.All(courses, c => Assert.NotEmpty(c.CouponData?.CouponCode));
+            Assert.All(courses, c => Assert.NotEmpty(c.CourseDetails?.CourseUri));
+
+            #endregion
         }
     }
 }

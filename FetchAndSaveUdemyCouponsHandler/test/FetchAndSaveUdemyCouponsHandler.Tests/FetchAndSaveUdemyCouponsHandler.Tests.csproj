@@ -13,11 +13,10 @@
     <ProjectReference Include="..\..\src\FetchAndSaveUdemyCouponsHandler\FetchAndSaveUdemyCouponsHandler.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="resources\udemy-course-details.html" />
-    <EmbeddedResource Include="resources\disk-udemy\disk-udemy-listing.html">
+    <EmbeddedResource Include="resources\udemy\udemy-course-details.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="resources\udemy-course-details.html">
+    <EmbeddedResource Include="resources\disk-udemy\disk-udemy-listing.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Remove="resources\disk-udemy\free-course-details.html" />
@@ -26,6 +25,14 @@
     </EmbeddedResource>
     <None Remove="resources\disk-udemy\valid-coupon-code.html" />
     <EmbeddedResource Include="resources\disk-udemy\valid-coupon-code.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Remove="resources\udemy\valid-coupon.json" />
+    <EmbeddedResource Include="resources\udemy\valid-coupon.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Remove="resources\udemy\free-udemy-course-details.html" />
+    <EmbeddedResource Include="resources\udemy\free-udemy-course-details.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

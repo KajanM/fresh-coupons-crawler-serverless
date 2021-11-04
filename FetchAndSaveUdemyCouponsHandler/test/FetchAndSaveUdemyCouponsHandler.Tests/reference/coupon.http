@@ -1,1 +1,3 @@
-﻿ https://www.udemy.com/api-2.0/course-landing-components/3482168/me/?components=buy_button,purchase,redeem_coupon,recommendation,discount_expiration,gift_this_course,available_coupons&discountCode=41012852OCT2021
+﻿# GET https://www.udemy.com/api-2.0/course-landing-components/3482168/me/?components=buy_button,purchase,redeem_coupon,recommendation,discount_expiration,gift_this_course,available_coupons&discountCode=41012852OCT2021
+
+ GET https://www.udemy.com/api-2.0/course-landing-components/2529704/me/?components=discount_expiration,purchase,available_coupons&discountCode=AA27CA010957D4F429AA

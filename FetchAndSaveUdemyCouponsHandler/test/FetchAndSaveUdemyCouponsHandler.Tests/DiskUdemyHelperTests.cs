@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using FetchAndSaveUdemyCouponsHandler.Helpers;
+using FetchAndSaveUdemyCouponsHandler.DiscUdemy.Helpers;
 using Xunit;
 
 namespace FetchAndSaveUdemyCouponsHandler.Tests
@@ -18,14 +18,15 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
 
             #region Act
 
-            var links = await DiskUdemyHelper.ParseDiskUdemyLinksAsync(testHtml);
+            var parseDiscUdemyLinksResult = await DiscUdemyParsingHelper.ParseDiscUdemyLinksAsync(testHtml);
 
             #endregion
 
             #region Assert
 
-            Assert.Equal(15, links.Count);
-            Assert.All(links, l => l.Contains("https://www.diskudemy.com/"));
+            Assert.True(parseDiscUdemyLinksResult.IsSuccess);
+            Assert.Equal(15, parseDiscUdemyLinksResult.Thumbnails.Count);
+            Assert.All(parseDiscUdemyLinksResult.Thumbnails, l => l.DiscUdemyCourseDetailsLink.Contains("https://www.discudemy.com/"));
 
             #endregion
         }
@@ -41,7 +42,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
 
             #region Act
 
-            var couponCodePageLink = DiskUdemyHelper.MapToCouponCodePageLink(courseUrl)[0];
+            var couponCodePageLink = DiscUdemyParsingHelper.MapToCouponCodePageLink(new[] { courseUrl })[0];
 
             #endregion
 
@@ -63,14 +64,14 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
 
             #region Act
 
-            var (isCouponValid, couponDto) = await DiskUdemyHelper.ParseCouponDataAsync(testHtml);
+            var parseCouponDataResult = await DiscUdemyParsingHelper.ParseCouponDataAsync(testHtml);
 
             #endregion
 
             #region Assert
 
-            Assert.False(isCouponValid);
-            Assert.Null(couponDto);
+            Assert.False(parseCouponDataResult.IsSuccess);
+            Assert.Null(parseCouponDataResult.Coupon);
 
             #endregion
         }
@@ -86,16 +87,16 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
 
             #region Act
 
-            var (isCouponValid, couponDto) = await DiskUdemyHelper.ParseCouponDataAsync(testHtml);
+            var parseCouponDataResult = await DiscUdemyParsingHelper.ParseCouponDataAsync(testHtml);
 
             #endregion
 
             #region Assert
 
-            Assert.True(isCouponValid);
-            Assert.Equal("ARABIC-COURSE", couponDto.Coupon);
+            Assert.True(parseCouponDataResult.IsSuccess);
+            Assert.Equal("ARABIC-COURSE", parseCouponDataResult.Coupon.CouponCode);
             Assert.Equal("https://www.udemy.com/course/arabic-language-learn-to-read-arabic-through-short-stories",
-                couponDto.Url);
+                parseCouponDataResult.Coupon.Url);
 
             #endregion
         }
