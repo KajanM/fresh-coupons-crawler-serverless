@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Amazon.Lambda.TestUtilities;
 using Xunit;
@@ -37,9 +38,10 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
             #region Assert
 
             courses.ForEach(c => _outputHelper.WriteLine(c.ToString()));
-            
+
             Assert.NotEmpty(courses);
-            Assert.All(courses, c => Assert.NotEmpty(c.CouponData?.CouponCode));
+            Assert.All(courses.Where(c => !c.IsAlreadyAFreeCourse).ToList(),
+                c => Assert.NotEmpty(c.CouponData?.CouponCode));
             Assert.All(courses, c => Assert.NotEmpty(c.CourseDetails?.CourseUri));
 
             #endregion

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Amazon;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.Serialization.SystemTextJson;
 using AngleSharp;
-using FetchAndSaveUdemyCouponsHandler.DiscUdemy.Helpers;
+using FetchAndSaveUdemyCouponsHandler.Config;
+using FetchAndSaveUdemyCouponsHandler.DataStore;
 using FetchAndSaveUdemyCouponsHandler.Services.DiscUdemy;
 using FetchAndSaveUdemyCouponsHandler.Shared.Dtos;
+using FetchAndSaveUdemyCouponsHandler.Shared.Extensions;
 using FetchAndSaveUdemyCouponsHandler.Shared.Helpers;
 using FetchAndSaveUdemyCouponsHandler.Shared.Services;
 using FetchAndSaveUdemyCouponsHandler.Shared.ViewModels;
@@ -52,12 +55,15 @@ namespace FetchAndSaveUdemyCouponsHandler
 
                 foreach (var coupon in coupons.Distinct())
                 {
-                    var courseDetails = await GetCourseDetailsAndCouponValidityAsync(coupon, httpClient, browsingContext);
+                    var courseDetails =
+                        await GetCourseDetailsAndCouponValidityAsync(coupon, httpClient, browsingContext);
                     if (courseDetails == null) continue;
                     coursesWithCoupon.Add(courseDetails);
                 }
 
                 #endregion
+
+                await SaveToRepositoryAsync(coursesWithCoupon);
 
                 return coursesWithCoupon;
             }
@@ -67,6 +73,52 @@ namespace FetchAndSaveUdemyCouponsHandler
             }
 
             return null;
+        }
+
+        private static async Task SaveToRepositoryAsync(List<CourseDetailsWithCouponViewModel> coursesWithCoupon)
+        {
+            try
+            {
+                var configurationService = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
+                var configResult = await configurationService.GetAsync(ConfigurationKeys.Branch,
+                    ConfigurationKeys.Owner,
+                    ConfigurationKeys.Repository, ConfigurationKeys.Token);
+
+                if (!configResult.IsSuccess) return;
+
+                IGithubService githubService = new GithubService(
+                    configResult.Config[ConfigurationKeys.Owner],
+                    configResult.Config[ConfigurationKeys.Repository],
+                    configResult.Config[ConfigurationKeys.Branch],
+                    configResult.Config[ConfigurationKeys.Token]
+                );
+                var jsonContent = coursesWithCoupon.ToJson();
+
+                var now = DateTime.Now.ToString("yyyy-MM-dd-HH-ss");
+                var createFileResult =
+                    await githubService.CreateFileAsync($"{now}.json", jsonContent, $"add {now}.json");
+                if (!createFileResult.IsSuccess)
+                {
+                    LoggerUtils.Error($"unable to create {now}.json in GitHub. {createFileResult.GetFormattedError()}");
+                    return;
+                }
+
+                var meta = new MetaFile
+                {
+                    LastSynced = now
+                };
+                var updateFileResult =
+                    await githubService.UpdateFileAsync("meta.json", meta.ToJson(), $"added new contents {now}.json");
+                if (!updateFileResult.IsSuccess)
+                {
+                    LoggerUtils.Error(
+                        $"an error occured while updating the meta file {updateFileResult.GetFormattedError()}");
+                }
+            }
+            catch (Exception e)
+            {
+                LoggerUtils.Error("an error occured while saving parsed result in the GitHub repo", e);
+            }
         }
 
         private static async Task<CourseDetailsWithCouponViewModel> GetCourseDetailsAndCouponValidityAsync(
@@ -149,6 +201,20 @@ namespace FetchAndSaveUdemyCouponsHandler
             public int NumberOfPagesToParse { get; set; } = 5;
 
             public int StartPageNo { get; set; } = 1;
+        }
+
+        public class MetaFile
+        {
+            public string LastSynced { get; set; }
+        }
+
+        // TODO: take from appsettings instead?
+        public static class ConfigurationKeys
+        {
+            public const string Branch = "fc.branch";
+            public const string Owner = "fc.owner";
+            public const string Repository = "fc.repository";
+            public const string Token = "fc.token";
         }
     }
 }

@@ -1,5 +1,7 @@
 using Amazon.CDK;
+using Amazon.CDK.AWS.IAM;
 using Amazon.CDK.AWS.Lambda;
+using Amazon.CDK.AWS.SSM;
 
 namespace FreshCouponsBe
 {
@@ -7,7 +9,7 @@ namespace FreshCouponsBe
     {
         internal FreshCouponsBeStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
-            new Function(this, "FetchAndSaveUdemyCoupons", new FunctionProps
+            var fetchAndSaveUdemyCouponsFunction = new Function(this, "FetchAndSaveUdemyCoupons", new FunctionProps
             {
                 FunctionName = "FetchAndSaveUdemyCoupons",
                 Runtime = Runtime.DOTNET_CORE_3_1,
@@ -15,6 +17,40 @@ namespace FreshCouponsBe
                     "./FetchAndSaveUdemyCouponsHandler/src/FetchAndSaveUdemyCouponsHandler/bin/Release/netcoreapp3.1/publish"),
                 Handler = "FetchAndSaveUdemyCouponsHandler::FetchAndSaveUdemyCouponsHandler.Function::FunctionHandler"
             });
+
+            fetchAndSaveUdemyCouponsFunction.Role.AddManagedPolicy(
+                ManagedPolicy.FromAwsManagedPolicyName("AmazonSSMReadOnlyAccess"));
+            
+            // todo take params value from appsettings
+            var branchParam = new StringParameter(this, "fc-branch", new StringParameterProps
+            {
+                Type = ParameterType.STRING,
+                ParameterName = "fc.branch",
+                StringValue = "<branch-name>"
+            });
+            branchParam.GrantRead(fetchAndSaveUdemyCouponsFunction.Role);
+            var ownerParam = new StringParameter(this, "fc-owner", new StringParameterProps
+            {
+                Type = ParameterType.STRING,
+                ParameterName = "fc.owner",
+                StringValue = "<owner-name>"
+            });
+            ownerParam.GrantRead(fetchAndSaveUdemyCouponsFunction.Role);
+            var repositoryParam = new StringParameter(this, "fc-repository", new StringParameterProps
+            {
+                Type = ParameterType.STRING,
+                ParameterName = "fc.repository",
+                StringValue = "<repository-name>"
+            });
+            repositoryParam.GrantRead(fetchAndSaveUdemyCouponsFunction.Role);
+
+            // var tokenParam = new StringParameter(this, "fc-token", new StringParameterProps
+            // {
+            //     Type = ParameterType.SECURE_STRING,
+            //     ParameterName = "fc.token",
+            //     StringValue = "<token-name>"
+            // });
+            // tokenParam.GrantRead(fetchAndSaveUdemyCouponsFunction.Role);
         }
     }
 }
