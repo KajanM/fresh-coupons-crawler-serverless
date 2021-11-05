@@ -92,7 +92,10 @@ namespace FetchAndSaveUdemyCouponsHandler
                     configResult.Config[ConfigurationKeys.Branch],
                     configResult.Config[ConfigurationKeys.Token]
                 );
-                var jsonContent = coursesWithCoupon.ToJson();
+                var jsonContent = coursesWithCoupon
+                    .OrderBy(c => c.IsAlreadyAFreeCourse ? 1 : 0)
+                    .ToDictionary(c => c.CourseDetails.CourseUri, c => c)
+                    .ToJson();
 
                 var now = DateTime.Now.ToString("yyyy-MM-dd-HH-ss");
                 var createFileResult =
