@@ -23,7 +23,6 @@ namespace FreshCouponsBe
             fetchAndSaveUdemyCouponsFunction.Role.AddManagedPolicy(
                 ManagedPolicy.FromAwsManagedPolicyName("AmazonSSMReadOnlyAccess"));
             
-            // todo take params value from appsettings
             var branchParam = new StringParameter(this, "fc-branch", new StringParameterProps
             {
                 Type = ParameterType.STRING,

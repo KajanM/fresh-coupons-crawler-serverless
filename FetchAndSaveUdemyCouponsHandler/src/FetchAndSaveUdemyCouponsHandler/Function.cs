@@ -208,7 +208,6 @@ namespace FetchAndSaveUdemyCouponsHandler
             public string LastSynced { get; set; }
         }
 
-        // TODO: take from appsettings instead?
         public static class ConfigurationKeys
         {
             public const string Branch = "fc.branch";
