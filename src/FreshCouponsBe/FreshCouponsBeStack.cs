@@ -1,4 +1,6 @@
 using Amazon.CDK;
+using Amazon.CDK.AWS.Events;
+using Amazon.CDK.AWS.Events.Targets;
 using Amazon.CDK.AWS.IAM;
 using Amazon.CDK.AWS.Lambda;
 using Amazon.CDK.AWS.SSM;
@@ -43,6 +45,19 @@ namespace FreshCouponsBe
                 StringValue = "<repository-name>"
             });
             repositoryParam.GrantRead(fetchAndSaveUdemyCouponsFunction.Role);
+            new Rule(this, "fresh-coupons-schedule", new RuleProps
+            {
+                Schedule = Schedule.Cron(new CronOptions
+                {
+                    Day = "*",
+                    Hour = "*",
+                    Minute = "0",
+                    Year = "*",
+                    Month = "*",
+                }),
+                RuleName = "fresh-coupons-schedule",
+                Targets = new []{new LambdaFunction(fetchAndSaveUdemyCouponsFunction)}
+            });
 
             // var tokenParam = new StringParameter(this, "fc-token", new StringParameterProps
             // {

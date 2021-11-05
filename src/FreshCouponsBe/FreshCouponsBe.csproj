@@ -10,6 +10,8 @@
   <ItemGroup>
     <!-- CDK Construct Library dependencies -->
     <PackageReference Include="Amazon.CDK" Version="1.130.0" />
+    <PackageReference Include="Amazon.CDK.AWS.Events" Version="1.130.0" />
+    <PackageReference Include="Amazon.CDK.AWS.Events.Targets" Version="1.130.0" />
     <PackageReference Include="Amazon.CDK.AWS.Lambda" Version="1.130.0" />
     <PackageReference Include="Amazon.CDK.AWS.SSM" Version="1.130.0" />
 
