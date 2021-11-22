@@ -33,6 +33,7 @@ namespace FetchAndSaveUdemyCouponsHandler
                 var browsingContext = BrowsingContext.New(Configuration.Default);
                 var coupons = new List<UdemyUrlWithCouponCode>();
                 var coursesWithCoupon = new List<CourseDetailsWithCouponViewModel>();
+                var freeCourses = new List<CourseDetailsWithCouponViewModel>();
 
                 var couponProviders = new List<IUdemyCouponProviderService>
                 {
@@ -58,12 +59,19 @@ namespace FetchAndSaveUdemyCouponsHandler
                     var courseDetails =
                         await GetCourseDetailsAndCouponValidityAsync(coupon, httpClient, browsingContext);
                     if (courseDetails == null) continue;
-                    coursesWithCoupon.Add(courseDetails);
+                    if (courseDetails.IsAlreadyAFreeCourse)
+                    {
+                        freeCourses.Add(courseDetails);
+                    }
+                    else
+                    {
+                        coursesWithCoupon.Add(courseDetails);
+                    }
                 }
 
                 #endregion
 
-                await SaveToRepositoryAsync(coursesWithCoupon);
+                await SaveToRepositoryAsync(coursesWithCoupon, freeCourses);
 
                 return coursesWithCoupon;
             }
@@ -75,7 +83,8 @@ namespace FetchAndSaveUdemyCouponsHandler
             return null;
         }
 
-        private static async Task SaveToRepositoryAsync(List<CourseDetailsWithCouponViewModel> coursesWithCoupon)
+        private static async Task SaveToRepositoryAsync(List<CourseDetailsWithCouponViewModel> coursesWithCoupon,
+            List<CourseDetailsWithCouponViewModel> freeCourses)
         {
             try
             {
@@ -92,10 +101,11 @@ namespace FetchAndSaveUdemyCouponsHandler
                     configResult.Config[ConfigurationKeys.Branch],
                     configResult.Config[ConfigurationKeys.Token]
                 );
-                var jsonContent = coursesWithCoupon
-                    .OrderBy(c => c.IsAlreadyAFreeCourse ? 1 : 0)
-                    .ToDictionary(c => c.CourseDetails.CourseUri, c => c)
-                    .ToJson();
+                var jsonContent = new CourseDetailsFile
+                {
+                    CoursesWithCoupon = coursesWithCoupon.ToDictionary(c => c.CourseDetails.CourseUri, c => c),
+                    FreeCourses = freeCourses.ToDictionary(c => c.CourseDetails.CourseUri, c => c)
+                }.ToJson();
 
                 var now = DateTime.Now.ToString("yyyy-MM-dd-HH-ss");
                 var createFileResult =
@@ -209,6 +219,13 @@ namespace FetchAndSaveUdemyCouponsHandler
         public class MetaFile
         {
             public string LastSynced { get; set; }
+        }
+        
+        public class CourseDetailsFile
+        {
+            public Dictionary<string, CourseDetailsWithCouponViewModel> CoursesWithCoupon { get; set; } 
+            
+            public Dictionary<string, CourseDetailsWithCouponViewModel> FreeCourses { get; set; } 
         }
 
         public static class ConfigurationKeys
