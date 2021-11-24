@@ -26,6 +26,48 @@ namespace FetchAndSaveUdemyCouponsHandler.DataStore
             };
         }
 
+        public async Task<UpdateOrCreateGithubFileResult> UpdateOrCreateFileAsync(string path, string content, string message)
+        {
+            var result = new UpdateOrCreateGithubFileResult();
+            try
+            {
+                var updateResult = await UpdateFileAsync(path, content, message);
+
+                if (updateResult.IsSuccess)
+                {
+                    return new UpdateOrCreateGithubFileResult
+                    {
+                        IsSuccess = true,
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+               LoggerUtils.Error($"An error occured while updating {path} on GitHub", e);
+               result.AddError(e.Message);
+            }
+            
+            try
+            {
+                var createResult = await CreateFileAsync(path, content, message);
+
+                if (createResult.IsSuccess)
+                {
+                    return new UpdateOrCreateGithubFileResult
+                    {
+                        IsSuccess = true,
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+               LoggerUtils.Error($"An error occured while creating {path} on GitHub", e);
+               result.AddError(e.Message);
+            }
+
+            return result;
+        }
+
         public async Task<UpdateGithubFileResult> UpdateFileAsync(string path, string content, string message)
         {
             var result = new UpdateGithubFileResult();
@@ -95,6 +137,11 @@ namespace FetchAndSaveUdemyCouponsHandler.DataStore
 
             return result;
         }
+    }
+    
+    
+    public class UpdateOrCreateGithubFileResult : BaseResult
+    {
     }
 
     public class UpdateGithubFileResult : BaseResult

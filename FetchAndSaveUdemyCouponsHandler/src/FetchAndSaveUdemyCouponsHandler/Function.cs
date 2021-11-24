@@ -9,6 +9,7 @@ using Amazon.Lambda.Serialization.SystemTextJson;
 using AngleSharp;
 using FetchAndSaveUdemyCouponsHandler.Config;
 using FetchAndSaveUdemyCouponsHandler.DataStore;
+using FetchAndSaveUdemyCouponsHandler.RealDiscount.Services;
 using FetchAndSaveUdemyCouponsHandler.Services.DiscUdemy;
 using FetchAndSaveUdemyCouponsHandler.Shared.Dtos;
 using FetchAndSaveUdemyCouponsHandler.Shared.Extensions;
@@ -37,7 +38,8 @@ namespace FetchAndSaveUdemyCouponsHandler
 
                 var couponProviders = new List<IUdemyCouponProviderService>
                 {
-                    new DiscUdemyCouponProviderService()
+                    new DiscUdemyCouponProviderService(),
+                    new RealDiscountUdemyCouponProviderService()
                 };
 
                 #region Get Udemy course links with coupon code
@@ -86,6 +88,7 @@ namespace FetchAndSaveUdemyCouponsHandler
         private static async Task SaveToRepositoryAsync(List<CourseDetailsWithCouponViewModel> coursesWithCoupon,
             List<CourseDetailsWithCouponViewModel> freeCourses)
         {
+            const string pathSegment = "udemy/v2";
             try
             {
                 var configurationService = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
@@ -109,7 +112,7 @@ namespace FetchAndSaveUdemyCouponsHandler
 
                 var now = DateTime.Now.ToString("yyyy-MM-dd-HH-ss");
                 var createFileResult =
-                    await githubService.CreateFileAsync($"{now}.json", jsonContent, $"add {now}.json");
+                    await githubService.CreateFileAsync($"{pathSegment}/{now}.json", jsonContent, $"add {now}.json");
                 if (!createFileResult.IsSuccess)
                 {
                     LoggerUtils.Error($"unable to create {now}.json in GitHub. {createFileResult.GetFormattedError()}");
@@ -120,12 +123,12 @@ namespace FetchAndSaveUdemyCouponsHandler
                 {
                     LastSynced = now
                 };
-                var updateFileResult =
-                    await githubService.UpdateFileAsync("meta.json", meta.ToJson(), $"added new contents {now}.json");
-                if (!updateFileResult.IsSuccess)
+                var updateOrCreateFileResult =
+                    await githubService.UpdateOrCreateFileAsync($"{pathSegment}/meta.json", meta.ToJson(), $"added new contents {now}.json");
+                if (!updateOrCreateFileResult.IsSuccess)
                 {
                     LoggerUtils.Error(
-                        $"an error occured while updating the meta file {updateFileResult.GetFormattedError()}");
+                        $"an error occured while updating the meta file {updateOrCreateFileResult.GetFormattedError()}");
                 }
             }
             catch (Exception e)
@@ -211,7 +214,7 @@ namespace FetchAndSaveUdemyCouponsHandler
 
         public class FunctionArgs
         {
-            public int NumberOfPagesToParse { get; set; } = 5;
+            public int NumberOfPagesToParse { get; set; } = 10;
 
             public int StartPageNo { get; set; } = 1;
         }

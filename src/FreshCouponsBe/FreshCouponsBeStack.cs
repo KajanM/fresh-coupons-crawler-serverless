@@ -1,3 +1,4 @@
+using System;
 using Amazon.CDK;
 using Amazon.CDK.AWS.Events;
 using Amazon.CDK.AWS.Events.Targets;
@@ -18,6 +19,11 @@ namespace FreshCouponsBe
                 Code = Code.FromAsset(
                     "./FetchAndSaveUdemyCouponsHandler/src/FetchAndSaveUdemyCouponsHandler/bin/Release/netcoreapp3.1/publish"),
                 Handler = "FetchAndSaveUdemyCouponsHandler::FetchAndSaveUdemyCouponsHandler.Function::FunctionHandler"
+            });
+            var version = new Version_(this, $"fc{DateTime.Now:yyyyMMddHHmm}", new VersionProps
+            {
+                Lambda = fetchAndSaveUdemyCouponsFunction,
+                Description = "Crawl udemy coupons from discudemy and realdiscounts"
             });
 
             fetchAndSaveUdemyCouponsFunction.Role.AddManagedPolicy(
