@@ -216,7 +216,7 @@ namespace FetchAndSaveUdemyCouponsHandler
 
         public class FunctionArgs
         {
-            public int NumberOfPagesToParse { get; set; } = 10;
+            public int NumberOfPagesToParse { get; set; } = 5;
 
             public int StartPageNo { get; set; } = 1;
         }
