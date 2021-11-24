@@ -20,11 +20,6 @@ namespace FreshCouponsBe
                     "./FetchAndSaveUdemyCouponsHandler/src/FetchAndSaveUdemyCouponsHandler/bin/Release/netcoreapp3.1/publish"),
                 Handler = "FetchAndSaveUdemyCouponsHandler::FetchAndSaveUdemyCouponsHandler.Function::FunctionHandler"
             });
-            var version = new Version_(this, $"fc{DateTime.Now:yyyyMMddHHmm}", new VersionProps
-            {
-                Lambda = fetchAndSaveUdemyCouponsFunction,
-                Description = "Crawl udemy coupons from discudemy and realdiscounts"
-            });
 
             fetchAndSaveUdemyCouponsFunction.Role.AddManagedPolicy(
                 ManagedPolicy.FromAwsManagedPolicyName("AmazonSSMReadOnlyAccess"));
