@@ -106,7 +106,9 @@ namespace FetchAndSaveUdemyCouponsHandler
                 );
                 var jsonContent = new CourseDetailsFile
                 {
-                    CoursesWithCoupon = coursesWithCoupon.ToDictionary(c => c.CourseDetails.CourseUri, c => c),
+                    CoursesWithCoupon = coursesWithCoupon
+                        .OrderByDescending(c => c.CouponData.DiscountPercentage)
+                        .ToDictionary(c => c.CourseDetails.CourseUri, c => c),
                     FreeCourses = freeCourses.ToDictionary(c => c.CourseDetails.CourseUri, c => c)
                 }.ToJson();
 
