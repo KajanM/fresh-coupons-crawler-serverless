@@ -120,11 +120,6 @@ namespace FetchAndSaveUdemyCouponsHandler.DiscUdemy.Helpers
             return result;
         }
 
-        public class ParseCouponDataResult : BaseResult
-        {
-            public UdemyUrlWithCouponCode Coupon { get; set; }
-        }
-
         private static class DomSelectors
         {
             public const string DiskUdemyCouponLink = ".card .card-header";
