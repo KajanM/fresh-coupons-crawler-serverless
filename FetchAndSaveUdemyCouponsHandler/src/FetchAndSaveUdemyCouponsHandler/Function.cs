@@ -25,6 +25,9 @@ namespace FetchAndSaveUdemyCouponsHandler
 {
     public class Function
     {
+        // TODO: get from parameter store instead
+        private const string GitHubPathSegment = "udemy/v2";
+        
         public async Task<List<CourseDetailsWithCouponViewModel>> FunctionHandler(FunctionArgs args,
             ILambdaContext context)
         {
@@ -35,6 +38,14 @@ namespace FetchAndSaveUdemyCouponsHandler
                 var coupons = new List<UdemyUrlWithCouponCode>();
                 var coursesWithCoupon = new List<CourseDetailsWithCouponViewModel>();
                 var freeCourses = new List<CourseDetailsWithCouponViewModel>();
+                
+                var configResult = await InitializeParameterStoreValuesAsync();
+
+                if (!configResult.IsSuccess)
+                    throw new ApplicationException(
+                        $"Unable to initialize config values from the parameter store.{Environment.NewLine}ConfigResult: {configResult.ToJson()}");
+
+                var lastCrawledData = await InitializeLastCrawledDataAsync(configResult.Config[ConfigurationKeys.Owner], configResult.Config[ConfigurationKeys.Repository], configResult.Config[ConfigurationKeys.Branch], httpClient);
 
                 var couponProviders = new List<IUdemyCouponProviderService>
                 {
@@ -59,7 +70,7 @@ namespace FetchAndSaveUdemyCouponsHandler
                 foreach (var coupon in coupons.Distinct())
                 {
                     var courseDetails =
-                        await GetCourseDetailsAndCouponValidityAsync(coupon, httpClient, browsingContext);
+                        await GetCourseDetailsAndCouponValidityAsync(coupon,lastCrawledData, httpClient, browsingContext);
                     if (courseDetails == null) continue;
                     if (courseDetails.IsAlreadyAFreeCourse)
                     {
@@ -85,10 +96,82 @@ namespace FetchAndSaveUdemyCouponsHandler
             return null;
         }
 
+        private static async Task<Dictionary<string, CourseDetailsViewModel>> InitializeLastCrawledDataAsync(string repoOwner, string repoName, string branch, HttpClient httpClient = null)
+        {
+            if (string.IsNullOrWhiteSpace(repoOwner)) throw new ArgumentNullException(nameof(repoOwner));
+            if (string.IsNullOrWhiteSpace(repoName)) throw new ArgumentNullException(nameof(repoName));
+            if (string.IsNullOrWhiteSpace(branch)) throw new ArgumentNullException(nameof(branch));
+            
+            httpClient ??= new HttpClient();
+            var result = new Dictionary<string, CourseDetailsViewModel>();
+
+            var metaFileUrl =
+                $"https://raw.githubusercontent.com/{repoOwner}/{repoName}/{branch}/{GitHubPathSegment}/meta.json";
+            var getLastCrawledMetadataResult = await HttpHelper.GetAsync<MetaFile>(
+                metaFileUrl,
+                httpClient);
+
+            if (!getLastCrawledMetadataResult.IsSuccess)
+            {
+                LoggerUtils.Warn(
+                    $"Unable to resolve content from {metaFileUrl}.{Environment.NewLine}{nameof(getLastCrawledMetadataResult)}: {getLastCrawledMetadataResult.ToJson()}");
+                return result;
+            }
+
+            var lastCrawledCourseDataUrl =
+                $"https://raw.githubusercontent.com/{repoOwner}/{repoName}/{branch}/{GitHubPathSegment}/{getLastCrawledMetadataResult.Data.LastSynced}.json";
+
+            var getLastCrawledCourseDataResult = await HttpHelper.GetAsync<CourseDetailsFile>(
+                lastCrawledCourseDataUrl,
+                httpClient);
+
+            if (!getLastCrawledCourseDataResult.IsSuccess)
+            {
+                LoggerUtils.Warn(
+                    $"Unable to resolve content from {lastCrawledCourseDataUrl}.{Environment.NewLine}{nameof(getLastCrawledCourseDataResult)}: {getLastCrawledCourseDataResult.ToJson()}");
+                return result;
+            }
+
+            foreach (
+                var (key, value) in getLastCrawledCourseDataResult.Data.CoursesWithCoupon)
+            {
+                if (!result.ContainsKey(key))
+                {
+                    result.Add(key, value.CourseDetails);
+                }
+                else
+                {
+                    LoggerUtils.Warn($"Found duplicate key from the last crawled course data file for key {key}");
+                }
+            }
+
+            foreach (
+                var (key, value) in getLastCrawledCourseDataResult.Data.FreeCourses)
+            {
+                if (!result.ContainsKey(key))
+                {
+                    result.Add(key, value.CourseDetails);
+                }
+                else
+                {
+                    LoggerUtils.Warn($"Found duplicate key from the last crawled course data file for key {key}");
+                }
+            }
+
+            return result;
+        }
+
+        private static async Task<ParameterStoreConfigurationService.GetConfigResult> InitializeParameterStoreValuesAsync()
+        {
+            var configurationService = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
+            return await configurationService.GetAsync(ConfigurationKeys.Branch,
+                ConfigurationKeys.Owner,
+                ConfigurationKeys.Repository, ConfigurationKeys.Token);
+        }
+
         private static async Task SaveToRepositoryAsync(List<CourseDetailsWithCouponViewModel> coursesWithCoupon,
             List<CourseDetailsWithCouponViewModel> freeCourses)
         {
-            const string pathSegment = "udemy/v2";
             try
             {
                 var configurationService = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
@@ -114,7 +197,7 @@ namespace FetchAndSaveUdemyCouponsHandler
 
                 var now = DateTime.Now.ToString("yyyy-MM-dd-HH-ss");
                 var createFileResult =
-                    await githubService.CreateFileAsync($"{pathSegment}/{now}.json", jsonContent, $"add {now}.json");
+                    await githubService.CreateFileAsync($"{GitHubPathSegment}/{now}.json", jsonContent, $"add {now}.json");
                 if (!createFileResult.IsSuccess)
                 {
                     LoggerUtils.Error($"unable to create {now}.json in GitHub. {createFileResult.GetFormattedError()}");
@@ -126,7 +209,7 @@ namespace FetchAndSaveUdemyCouponsHandler
                     LastSynced = now
                 };
                 var updateOrCreateFileResult =
-                    await githubService.UpdateOrCreateFileAsync($"{pathSegment}/meta.json", meta.ToJson(), $"added new contents {now}.json");
+                    await githubService.UpdateOrCreateFileAsync($"{GitHubPathSegment}/meta.json", meta.ToJson(), $"added new contents {now}.json");
                 if (!updateOrCreateFileResult.IsSuccess)
                 {
                     LoggerUtils.Error(
@@ -140,20 +223,31 @@ namespace FetchAndSaveUdemyCouponsHandler
         }
 
         private static async Task<CourseDetailsWithCouponViewModel> GetCourseDetailsAndCouponValidityAsync(
-            UdemyUrlWithCouponCode coupon, HttpClient httpClient = null, IBrowsingContext browsingContext = null)
+            UdemyUrlWithCouponCode coupon, Dictionary<string, CourseDetailsViewModel> lastCrawledData, HttpClient httpClient = null, IBrowsingContext browsingContext = null)
         {
             try
             {
-                var getCourseDetailsResult =
-                    await UdemyHelper.GetCourseDetailsAsync(coupon.Url, coupon.IsAlreadyAFreeCourse, httpClient,
-                        browsingContext);
-                if (!getCourseDetailsResult.IsSuccess) return null;
+                CourseDetailsViewModel courseDetails;
+                var urlWithEndingBackSlash = coupon.Url.EndsWith("/") ? coupon.Url : $"{coupon.Url}/";
+                if (lastCrawledData.ContainsKey(urlWithEndingBackSlash))
+                {
+                    courseDetails = lastCrawledData[urlWithEndingBackSlash];
+                    LoggerUtils.Info($"Course details for {urlWithEndingBackSlash} initialized from last crawled data");
+                }
+                else
+                {
+                    var getCourseDetailsResult =
+                        await UdemyHelper.GetCourseDetailsAsync(coupon.Url, coupon.IsAlreadyAFreeCourse, httpClient,
+                            browsingContext);
+                    if (!getCourseDetailsResult.IsSuccess) return null;
+                    courseDetails = getCourseDetailsResult.CourseDetails;
+                }
 
                 if (coupon.IsAlreadyAFreeCourse)
                 {
                     return new CourseDetailsWithCouponViewModel
                     {
-                        CourseDetails = getCourseDetailsResult.CourseDetails,
+                        CourseDetails = courseDetails,
                         IsAlreadyAFreeCourse = true,
                     };
                 }
@@ -166,7 +260,7 @@ namespace FetchAndSaveUdemyCouponsHandler
 
                 LoggerUtils.Info($"checking coupon validity from Udemy for {coupon.Url}");
                 var isCouponValidResult = await UdemyHelper.IsCouponValid(
-                    getCourseDetailsResult.CourseDetails.CourseId,
+                    courseDetails.CourseId,
                     coupon.CouponCode, httpClient);
                 if (!isCouponValidResult.IsSuccess)
                 {
@@ -178,7 +272,7 @@ namespace FetchAndSaveUdemyCouponsHandler
 
                 return new CourseDetailsWithCouponViewModel
                 {
-                    CourseDetails = getCourseDetailsResult.CourseDetails,
+                    CourseDetails = courseDetails,
                     CouponData = isCouponValidResult.CouponData
                 };
             }
