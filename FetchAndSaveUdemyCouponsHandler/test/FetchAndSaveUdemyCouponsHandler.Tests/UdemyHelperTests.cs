@@ -1,11 +1,6 @@
 ﻿using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Amazon;
-using Amazon.Internal;
 using AngleSharp;
-using FetchAndSaveUdemyCouponsHandler.Config;
 using FetchAndSaveUdemyCouponsHandler.Udemy.Helpers;
 using Xunit;
 using Xunit.Abstractions;
@@ -86,38 +81,6 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
             Assert.Equal(isCouponValidResult.CouponData.OriginalPrice, "$19.99");
             Assert.Equal(isCouponValidResult.CouponData.ExpirationText, "2 hours");
 
-            #endregion
-        }
-
-        [Fact]
-        public async Task ParsingUdemyCourseIdShouldSucceed()
-        {
-            var testString = await File.ReadAllTextAsync("./resources/udemy/free-udemy-course-details.html");
-            var parsedData = await UdemyHelper.ParseCourseIdAsync(testString);
-            _outputHelper.WriteLine(parsedData.Id);
-        }
-
-        [Fact]
-        public async Task ResolveCourseDetailsFromApiAsyncShouldSucceed()
-        {
-            #region Arrange
-
-            var configurationService = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
-            var getConfigResult = await configurationService.GetAsync(Function.ConfigurationKeys.UdemyCredentials);
-            var udemyClient = new HttpClient();
-            udemyClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", getConfigResult.Config[Function.ConfigurationKeys.UdemyCredentials]);
-
-            #endregion
-
-            #region Act
-
-            var result = await UdemyHelper.ResolveCourseDetailsFromApiAsync("4439276", udemyClient);
-
-            #endregion
-
-            #region Assert
-
-            Assert.True(result.IsSuccess);
             #endregion
         }
     }

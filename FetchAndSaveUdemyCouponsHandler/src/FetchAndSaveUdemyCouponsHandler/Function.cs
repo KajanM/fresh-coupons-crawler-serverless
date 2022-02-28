@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Amazon;
 using Amazon.Lambda.Core;
@@ -71,7 +70,7 @@ namespace FetchAndSaveUdemyCouponsHandler
                 foreach (var coupon in coupons.Distinct())
                 {
                     var courseDetails =
-                        await GetCourseDetailsAndCouponValidityAsync(coupon,lastCrawledData, configResult.Config, httpClient, browsingContext);
+                        await GetCourseDetailsAndCouponValidityAsync(coupon,lastCrawledData, httpClient, browsingContext);
                     if (courseDetails == null) continue;
                     if (courseDetails.IsAlreadyAFreeCourse)
                     {
@@ -167,7 +166,7 @@ namespace FetchAndSaveUdemyCouponsHandler
             var configurationService = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
             return await configurationService.GetAsync(ConfigurationKeys.Branch,
                 ConfigurationKeys.Owner,
-                ConfigurationKeys.Repository, ConfigurationKeys.Token, ConfigurationKeys.UdemyCredentials);
+                ConfigurationKeys.Repository, ConfigurationKeys.Token);
         }
 
         private static async Task SaveToRepositoryAsync(List<CourseDetailsWithCouponViewModel> coursesWithCoupon,
@@ -224,8 +223,7 @@ namespace FetchAndSaveUdemyCouponsHandler
         }
 
         private static async Task<CourseDetailsWithCouponViewModel> GetCourseDetailsAndCouponValidityAsync(
-            UdemyUrlWithCouponCode coupon, Dictionary<string, CourseDetailsViewModel> lastCrawledData, Dictionary<string, string> parameterStore,
-            HttpClient httpClient = null, IBrowsingContext browsingContext = null)
+            UdemyUrlWithCouponCode coupon, Dictionary<string, CourseDetailsViewModel> lastCrawledData, HttpClient httpClient = null, IBrowsingContext browsingContext = null)
         {
             try
             {
@@ -238,16 +236,11 @@ namespace FetchAndSaveUdemyCouponsHandler
                 }
                 else
                 {
-                    var getCourseIdResult =
-                        await UdemyHelper.GetCourseIdAsync(coupon.Url, httpClient,
+                    var getCourseDetailsResult =
+                        await UdemyHelper.GetCourseDetailsAsync(coupon.Url, coupon.IsAlreadyAFreeCourse, httpClient,
                             browsingContext);
-                    if (!getCourseIdResult.IsSuccess) return null;
-                    var udemyClient = new HttpClient();
-                    udemyClient.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Basic", parameterStore[ConfigurationKeys.UdemyCredentials]);
-                    var courseDetailsResult = await UdemyHelper.ResolveCourseDetailsFromApiAsync(getCourseIdResult.Id, udemyClient);
-                    if (!courseDetailsResult.IsSuccess) return null;
-                    courseDetails = courseDetailsResult.CourseDetails;
+                    if (!getCourseDetailsResult.IsSuccess) return null;
+                    courseDetails = getCourseDetailsResult.CourseDetails;
                 }
 
                 if (coupon.IsAlreadyAFreeCourse)
@@ -340,7 +333,6 @@ namespace FetchAndSaveUdemyCouponsHandler
             public const string Owner = "fc.owner";
             public const string Repository = "fc.repository";
             public const string Token = "fc.token";
-            public const string UdemyCredentials = "fc.udemyCredentials";
         }
     }
 }
