@@ -17,6 +17,22 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
 {
     public static class UdemyHelper
     {
+        public static async Task<GetCourseDetailsResult> ResolveCourseDetailsFromApiAsync(string courseId,
+            HttpClient httpClient)
+        {
+            if (string.IsNullOrWhiteSpace(courseId)) throw new ArgumentNullException(nameof(courseId));
+            var result = new GetCourseDetailsResult();
+
+            var responseStream = await httpClient.GetStreamAsync($"https://www.udemy.com/api-2.0/courses/{courseId}/?fields[course]=@all");
+            var response = await JsonSerializer.DeserializeAsync<UdemyCourseDetailsResponse>(responseStream);
+
+            result.IsSuccess = true;
+
+           return result;
+        }
+        
+        private static 
+        
         public static async Task<GetCourseDetailsResult> GetCourseDetailsAsync(string udemyCourseDetailsPageUrl,
             bool isFreeCourse = false,
             HttpClient httpClient = null, IBrowsingContext browsingContext = null)
@@ -49,10 +65,75 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
 
             return result;
         }
+        
+        public static async Task<GetCourseIdResult> GetCourseIdAsync(string udemyCourseDetailsPageUrl,
+            HttpClient httpClient = null, IBrowsingContext browsingContext = null)
+        {
+            LoggerUtils.Info($"getting coursed details from Udemy for {udemyCourseDetailsPageUrl}");
+            var result = new GetCourseIdResult();
+            var getHttpResponseAsStringResult = await HttpHelper.GetStringAsync(udemyCourseDetailsPageUrl, httpClient);
+            if (!getHttpResponseAsStringResult.IsSuccess)
+            {
+                LoggerUtils.Error(
+                    $"an error occured while getting HTTP response from Udemy for {udemyCourseDetailsPageUrl}");
+                result.AddError(getHttpResponseAsStringResult.GetFormattedError());
+                return result;
+            }
+
+            LoggerUtils.Info($"parsing HTTP response from {udemyCourseDetailsPageUrl}");
+            var parseCourseIdResult =
+                await ParseCourseIdAsync(getHttpResponseAsStringResult.Response, browsingContext);
+            if (!parseCourseIdResult.IsSuccess)
+            {
+                LoggerUtils.Error($"an error occured while parsing HTTP response from {udemyCourseDetailsPageUrl}");
+                result.AddError(parseCourseIdResult.GetFormattedError());
+                return result;
+            }
+
+            LoggerUtils.Info($"successfully parsed HTTP response from {udemyCourseDetailsPageUrl}");
+
+            result.Id = parseCourseIdResult.Id;
+            result.IsSuccess = true;
+
+            return result;
+        }
+        
+
+        public class GetCourseIdResult : BaseResult
+        {
+            public string Id { get; set; }
+        }
 
         public class GetCourseDetailsResult : BaseResult
         {
             public CourseDetailsViewModel CourseDetails { get; set; }
+        }
+
+        public static async Task<ParseCourseIdResult> ParseCourseIdAsync(string courseDetailsStr,
+            IBrowsingContext browsingContext = null)
+        {
+                browsingContext ??= BrowsingContext.New(Configuration.Default);
+                var document = await browsingContext.OpenAsync(req => req.Content(courseDetailsStr));
+                var result =
+                    new ParseCourseIdResult();
+
+                try
+                {
+                    result.Id = document.Body.GetAttribute(DomSelectors.CourseIdSelector);
+                    result.IsSuccess = true;
+                }
+                catch (Exception e)
+                {
+                    LoggerUtils.Error("Unable to parse course id", e);
+                    result.IsSuccess = false;
+                }
+
+                return result;
+        }
+        
+        public class ParseCourseIdResult : BaseResult
+        {
+            public string Id { get; set; }
         }
 
         public static async Task<ParseCourseDetailsResult> ParseCourseDetailsAsync(string courseDetailsStr,
@@ -113,6 +194,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
             }
             catch (Exception e)
             {
+                LoggerUtils.Error("An error occured while parsing udemy course details", e);
                 result.AddError("An error occured while parsing udemy course details");
                 result.AddError(e.Message);
                 return result;
@@ -330,6 +412,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
             public const string EnrolledStudentCounts = "[data-purpose='enrollment']";
             public const string LastUpdatedDate = ".last-update-date span:nth-of-type(2)";
             public const string SidebarContainer = ".ud-component--course-landing-page-udlite--sidebar-container";
+            public const string CourseIdSelector = "data-clp-course-id";
 
             public const string DataPropsAttribute = "data-component-props";
         }
