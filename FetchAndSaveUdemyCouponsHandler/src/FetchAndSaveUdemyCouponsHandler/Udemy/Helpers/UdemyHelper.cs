@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 using AngleSharp;
@@ -106,7 +107,15 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
 
                 courseDetails.CourseId = courseId.Value;
 
-                courseDetails.Duration = ParseDuration(document, isFreeCourse, courseDetails.CourseUri);
+                var apiResult = await ResolveDurationFromApiAsync(courseId.Value, Function.UdemyHttpClient, isFreeCourse);
+                if (apiResult.IsSuccess)
+                {
+                    courseDetails.Duration = apiResult.Data.Duration;
+                }
+                else
+                {
+                    courseDetails.Duration = isFreeCourse ? "3600" : "1 hour";
+                }
 
                 result.IsSuccess = true;
                 return result;
@@ -150,6 +159,52 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
             }
 
             return count;
+        }
+
+        public static async Task<ResolveUdemyDataFromApiResult> ResolveDurationFromApiAsync(int courseId, HttpClient udemyHttpClient, bool isFreeCourse = false)
+        {
+            var result = new ResolveUdemyDataFromApiResult();
+
+            try
+            {
+                var responseStream =
+                    await udemyHttpClient.GetStreamAsync(
+                        $"https://www.udemy.com/api-2.0/courses/{courseId}/?fields[course]=estimated_content_length,content_info");
+                var response = await JsonSerializer.DeserializeAsync<UdemyCourseDetailsResponse>(responseStream);
+
+                result.Data = new UdemyApiData
+                {
+                    Duration = isFreeCourse ? (response.EstimatedContentLength / 60).ToString() : response.ContentInfo
+                };
+                result.IsSuccess = true;
+            }
+            catch (Exception e)
+            {
+                result.AddError($"Unable to resolve course data from Udemy API. course-id: {courseId}");
+                result.AddError(e.Message);
+                LoggerUtils.Error($"Unable to resolve course data from Udemy API. course-id: {courseId}", e);
+            }
+
+            return result;
+        }
+
+        public class ResolveUdemyDataFromApiResult : BaseResultWithPayload<UdemyApiData>
+        {
+            
+        }
+        
+        public class UdemyCourseDetailsResponse
+        {
+            [JsonPropertyName("estimated_content_length")]
+            public int EstimatedContentLength { get; set; }
+            
+            [JsonPropertyName("content_info")]
+            public string ContentInfo { get; set; }
+        }
+        
+        public class UdemyApiData
+        {
+            public string Duration { get; set; } 
         }
 
         private static string? ParseDuration(IDocument document, bool isFreeCourse = false, string courseUri = null)

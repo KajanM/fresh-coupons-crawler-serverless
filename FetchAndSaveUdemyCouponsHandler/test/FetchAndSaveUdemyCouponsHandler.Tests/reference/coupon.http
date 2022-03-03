@@ -1,3 +1,20 @@
 ﻿# GET https://www.udemy.com/api-2.0/course-landing-components/3482168/me/?components=buy_button,purchase,redeem_coupon,recommendation,discount_expiration,gift_this_course,available_coupons&discountCode=41012852OCT2021
 
  GET https://www.udemy.com/api-2.0/course-landing-components/2529704/me/?components=discount_expiration,purchase,available_coupons&discountCode=AA27CA010957D4F429AA
+ 
+###
+
+GET https://www.udemy.com/api-2.0/courses/965528/?fields[course]=@all
+Authorization: Basic {{udemy_cred}}
+
+###
+GET https://www.udemy.com/api-2.0/courses/965528/?fields[course]=title
+Authorization: Basic {{udemy_cred}}
+
+###
+GET https://www.udemy.com/api-2.0/notices/me/?type=smart_bar&limit=1&locale=en_US&currency=usd&user=false
+
+###
+
+GET https://www.udemy.com/api-2.0/courses/3339492/?fields[course]=estimated_content_length,title
+Authorization: Basic {{udemy_cred}}

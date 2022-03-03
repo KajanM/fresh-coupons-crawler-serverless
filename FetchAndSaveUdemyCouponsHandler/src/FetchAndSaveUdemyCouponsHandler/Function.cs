@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Amazon;
 using Amazon.Lambda.Core;
@@ -27,6 +28,7 @@ namespace FetchAndSaveUdemyCouponsHandler
     {
         // TODO: get from parameter store instead
         private const string GitHubPathSegment = "udemy/v2";
+        public static HttpClient UdemyHttpClient;
         
         public async Task<List<CourseDetailsWithCouponViewModel>> FunctionHandler(FunctionArgs args,
             ILambdaContext context)
@@ -40,11 +42,13 @@ namespace FetchAndSaveUdemyCouponsHandler
                 var freeCourses = new List<CourseDetailsWithCouponViewModel>();
                 
                 var configResult = await InitializeParameterStoreValuesAsync();
-
+                    
                 if (!configResult.IsSuccess)
                     throw new ApplicationException(
                         $"Unable to initialize config values from the parameter store.{Environment.NewLine}ConfigResult: {configResult.ToJson()}");
 
+                UdemyHttpClient = GetUdemyHttpClient(configResult.Config);
+                
                 var lastCrawledData = await InitializeLastCrawledDataAsync(configResult.Config[ConfigurationKeys.Owner], configResult.Config[ConfigurationKeys.Repository], configResult.Config[ConfigurationKeys.Branch], httpClient);
 
                 var couponProviders = new List<IUdemyCouponProviderService>
@@ -94,6 +98,14 @@ namespace FetchAndSaveUdemyCouponsHandler
             }
 
             return null;
+        }
+
+        public static HttpClient GetUdemyHttpClient(Dictionary<string, string> parameterStore)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Basic", parameterStore[ConfigurationKeys.UdemyCredentials]);
+            return client;
         }
 
         private static async Task<Dictionary<string, CourseDetailsViewModel>> InitializeLastCrawledDataAsync(string repoOwner, string repoName, string branch, HttpClient httpClient = null)
@@ -166,7 +178,7 @@ namespace FetchAndSaveUdemyCouponsHandler
             var configurationService = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
             return await configurationService.GetAsync(ConfigurationKeys.Branch,
                 ConfigurationKeys.Owner,
-                ConfigurationKeys.Repository, ConfigurationKeys.Token);
+                ConfigurationKeys.Repository, ConfigurationKeys.Token, ConfigurationKeys.UdemyCredentials);
         }
 
         private static async Task SaveToRepositoryAsync(List<CourseDetailsWithCouponViewModel> coursesWithCoupon,
@@ -333,6 +345,7 @@ namespace FetchAndSaveUdemyCouponsHandler
             public const string Owner = "fc.owner";
             public const string Repository = "fc.repository";
             public const string Token = "fc.token";
+            public const string UdemyCredentials = "fc.udemyCredentials";
         }
     }
 }

@@ -1,6 +1,10 @@
 ﻿using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Amazon;
 using AngleSharp;
+using FetchAndSaveUdemyCouponsHandler.Config;
 using FetchAndSaveUdemyCouponsHandler.Udemy.Helpers;
 using Xunit;
 using Xunit.Abstractions;
@@ -80,6 +84,30 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
             Assert.Equal(isCouponValidResult.CouponData.DiscountPercentage, 100);
             Assert.Equal(isCouponValidResult.CouponData.OriginalPrice, "$19.99");
             Assert.Equal(isCouponValidResult.CouponData.ExpirationText, "2 hours");
+
+            #endregion
+        }
+
+        [Fact]
+        public async Task ResolveUdemyDataFromApiAsyncShouldSucceedInHappyPath()
+        {
+            #region Arrange
+
+            var service = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
+            var getConfigResult = await service.GetAsync(Function.ConfigurationKeys.UdemyCredentials);
+            var httpClient = Function.GetUdemyHttpClient(getConfigResult.Config);
+
+            #endregion
+
+            #region Act
+
+            var resolveUdemyDataFromApiResult = await UdemyHelper.ResolveDurationFromApiAsync(3339492, httpClient);
+
+            #endregion
+
+            #region Assert
+
+            Assert.True(resolveUdemyDataFromApiResult.IsSuccess);
 
             #endregion
         }
