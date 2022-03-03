@@ -94,7 +94,7 @@ namespace FetchAndSaveUdemyCouponsHandler.DiscUdemy.Helpers
                 var udemyLink = new Uri(
                     ((IHtmlAnchorElement)document.QuerySelector(DomSelectors.UdemyLinkWithCouponCode))
                     .Href);
-                var couponCode = HttpUtility.ParseQueryString(udemyLink.Query).Get("couponCode");
+                var couponCode = HttpUtility.ParseQueryString(new Uri(HttpUtility.ParseQueryString(udemyLink.Query).Get("url")).Query).Get("couponCode");
                 if (string.IsNullOrWhiteSpace(couponCode))
                 {
                     LoggerUtils.Warn($"coupon code not received for {courseUri}. May be a free course?");
