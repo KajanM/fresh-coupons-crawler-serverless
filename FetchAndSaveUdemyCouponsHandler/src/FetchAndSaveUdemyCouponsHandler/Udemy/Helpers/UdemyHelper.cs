@@ -238,35 +238,25 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
         {
             if (document == null) throw new ArgumentNullException(nameof(document));
 
-            var selector = isFreeCourse ? DomSelectors.FreeCourseTabsData : DomSelectors.InstructorData;
-            var instructorDataEle = document.QuerySelector(selector);
+            var instructorDataEle = document.QuerySelector("body");
             if (instructorDataEle == null)
             {
                 LoggerUtils.Error($"could not fetch instructor data, course id for {courseUri}");
                 return (null, null);
             }
 
-            InstructorsDataBindingModel instructorData = null;
+            var mainCourseData = JsonSerializer.Deserialize<MainCourseDataBindingModel>(instructorDataEle
+                .GetAttribute("data-module-args")
+                ?.Trim());
 
-            if (isFreeCourse)
-            {
-                instructorData = JsonSerializer.Deserialize<CourseTabs>(instructorDataEle
-                    .GetAttribute(DomSelectors.DataPropsAttribute).Trim()).InstructorInfo;
-            }
-            else
-            {
-                instructorData = JsonSerializer.Deserialize<InstructorsDataBindingModel>(instructorDataEle
-                    .GetAttribute(DomSelectors.DataPropsAttribute).Trim());
-            }
-
-            return (instructorData.InstructorsInfo.Select(i => new Instructor
+            return (mainCourseData.ServerSideProps.Course.Instructors.InstructorsInfo.Select(i => new Instructor
             {
                 Name = i.DisplayName,
                 Url = i.AbsoluteUrl,
                 AverageRating = i.AvgRatingRecent,
                 TotalNumberOfReviews = i.TotalNumReviews,
                 TotalNumberOfStudents = i.TotalNumStudents
-            }).ToArray(), instructorData.CourseId);
+            }).ToArray(), mainCourseData.ServerSideProps.Course.Instructors.CourseId);
         }
 
         private static Rating? ParseAggregateRating(CourseDetailsBindingModel mainParsedData, string courseUri = null)
