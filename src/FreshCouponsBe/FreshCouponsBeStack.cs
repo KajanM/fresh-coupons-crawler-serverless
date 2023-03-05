@@ -15,9 +15,11 @@ namespace FreshCouponsBe
             var fetchAndSaveUdemyCouponsFunction = new Function(this, "FetchAndSaveUdemyCoupons", new FunctionProps
             {
                 FunctionName = "FetchAndSaveUdemyCoupons",
-                Runtime = Runtime.DOTNET_CORE_3_1,
+                Runtime = Runtime.DOTNET_6,
+                Timeout = Duration.Minutes(10),
+                MemorySize = 256,
                 Code = Code.FromAsset(
-                    "./FetchAndSaveUdemyCouponsHandler/src/FetchAndSaveUdemyCouponsHandler/bin/Release/netcoreapp3.1/publish"),
+                    "./FetchAndSaveUdemyCouponsHandler/src/FetchAndSaveUdemyCouponsHandler/bin/Release/net6.0/publish"),
                 Handler = "FetchAndSaveUdemyCouponsHandler::FetchAndSaveUdemyCouponsHandler.Function::FunctionHandler"
             });
 
