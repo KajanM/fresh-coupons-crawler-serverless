@@ -36,12 +36,14 @@ namespace FetchAndSaveUdemyCouponsHandler.Services.DiscUdemy
                         coupons.Add(getCouponDataFromDiscUdemyCouponPageResult.Coupon);
                     }
                 })).ToArray();
-
-            coupons.AddRange(couponPageLinks.Where(l => l.IsAlreadyAFreeCourse).Select(l => new UdemyUrlWithCouponCode
+            foreach (var l in couponPageLinks.Where(l => l.IsAlreadyAFreeCourse))
             {
-                Url = MapDiscUdemyCourseLinkToUdemyLink(l.DiscUdemyCourseDetailsLink),
-                IsAlreadyAFreeCourse = true
-            }));
+                coupons.Add(new UdemyUrlWithCouponCode
+                {
+                    Url = await MapDiscUdemyCourseLinkToUdemyLink(l.DiscUdemyCourseDetailsLink),
+                    IsAlreadyAFreeCourse = true
+                });
+            }
 
             try
             {
@@ -49,18 +51,18 @@ namespace FetchAndSaveUdemyCouponsHandler.Services.DiscUdemy
             }
             catch (Exception e)
             {
-                LoggerUtils.Error("an error occured while getting udemy coupons from discudemy", e);
+                await LoggerUtils.ErrorAsync("an error occured while getting udemy coupons from discudemy", e);
             }
 
             return coupons;
         }
 
-        public static string MapDiscUdemyCourseLinkToUdemyLink(string diskUdemyLink)
+        public static async Task<string> MapDiscUdemyCourseLinkToUdemyLink(string diskUdemyLink)
         {
             var coursePathVariable = diskUdemyLink.Split("/").Last();
             if (string.IsNullOrWhiteSpace(coursePathVariable))
             {
-                LoggerUtils.Error($"unable to map udemy link from {diskUdemyLink}");
+                await LoggerUtils.ErrorAsync($"unable to map udemy link from {diskUdemyLink}");
                 throw new ArgumentException(nameof(diskUdemyLink));
             }
 
@@ -130,7 +132,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Services.DiscUdemy
                     discUdemyCouponPageUrl);
             if (!parseCouponDataResult.IsSuccess)
             {
-                LoggerUtils.Error($"an error occured while parsing coupon data from {discUdemyCouponPageUrl}");
+                await LoggerUtils.ErrorAsync($"an error occured while parsing coupon data from {discUdemyCouponPageUrl}");
                 result.AddError(parseCouponDataResult.GetFormattedError());
                 return result;
             }

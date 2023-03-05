@@ -44,7 +44,7 @@ namespace FetchAndSaveUdemyCouponsHandler.RealDiscount.Services
             }
             catch (Exception e)
             {
-                LoggerUtils.Error("an error occured while getting udemy coupons from real-discount", e);
+                await LoggerUtils.ErrorAsync("an error occured while getting udemy coupons from real-discount", e);
             }
 
             return coupons;
@@ -114,7 +114,7 @@ namespace FetchAndSaveUdemyCouponsHandler.RealDiscount.Services
                     realDiscountCouponPageUrl);
             if (!parseCouponDataResult.IsSuccess)
             {
-                LoggerUtils.Error($"an error occured while parsing coupon data from {realDiscountCouponPageUrl}");
+                await LoggerUtils.ErrorAsync($"an error occured while parsing coupon data from {realDiscountCouponPageUrl}");
                 result.AddError(parseCouponDataResult.GetFormattedError());
                 return result;
             }

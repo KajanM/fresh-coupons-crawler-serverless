@@ -33,7 +33,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
 
             #region Act
 
-            var (instructors, courseId) = UdemyHelper.ParseInstructorData(document, true);
+            var (instructors, courseId) = await UdemyHelper.ParseInstructorDataAsync(document, true);
 
             #endregion
 
@@ -72,7 +72,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
 
             #region Act
 
-            var isCouponValidResult = UdemyHelper.ParseCouponValidStatus(testString);
+            var isCouponValidResult = await UdemyHelper.ParseCouponValidStatusAsync(testString);
 
             #endregion
 

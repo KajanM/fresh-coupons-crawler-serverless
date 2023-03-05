@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 
 namespace FetchAndSaveUdemyCouponsHandler.Shared.Helpers
@@ -10,12 +11,21 @@ namespace FetchAndSaveUdemyCouponsHandler.Shared.Helpers
             LambdaLogger.Log($"INFO: {msg}");
         }
 
-        public static void Error(string msg, Exception e = null)
+        public static async Task ErrorAsync(string msg, Exception e = null)
         {
             LambdaLogger.Log($"ERROR: {msg}");
             if (e != null)
             {
                 LambdaLogger.Log(e.ToString());
+            }
+
+            if (Function.ErrorReportingService != null)
+            {
+                if (e != null)
+                {
+                    msg = $"{msg} {Environment.NewLine}{e}";
+                }
+                await Function.ErrorReportingService.ReportAsync(msg);
             }
         }
 

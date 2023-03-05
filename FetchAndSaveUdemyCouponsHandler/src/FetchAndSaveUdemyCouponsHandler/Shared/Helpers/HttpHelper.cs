@@ -28,7 +28,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Shared.Helpers
             }
             catch (Exception e)
             {
-                LoggerUtils.Error($"An error occured while making GET request to {url}", e);
+                await LoggerUtils.ErrorAsync($"An error occured while making GET request to {url}", e);
                 result.AddError(e.Message);
             }
 
@@ -52,7 +52,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Shared.Helpers
             }
             catch (Exception e)
             {
-                LoggerUtils.Error(
+                await LoggerUtils.ErrorAsync(
                     $"An error occured while deserializing HTTP response to {nameof(TResponse)}.{Environment.NewLine}Response: {response.ToJson()}",
                     e);
                 result.AddError(e.Message);
@@ -83,7 +83,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Shared.Helpers
             catch (Exception e)
             {
                 result.AddError(e.Message);
-                LoggerUtils.Error($"an error occured while getting HTTP response as string from {url}", e);
+                await LoggerUtils.ErrorAsync($"an error occured while getting HTTP response as string from {url}", e);
             }
 
             return result;

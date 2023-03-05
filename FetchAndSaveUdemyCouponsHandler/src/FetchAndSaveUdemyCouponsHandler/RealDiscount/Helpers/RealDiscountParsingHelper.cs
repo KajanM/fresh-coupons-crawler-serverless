@@ -40,7 +40,7 @@ namespace FetchAndSaveUdemyCouponsHandler.RealDiscount.Helpers
             }
             catch (Exception e)
             {
-                LoggerUtils.Error("an error occured while parsing course lists from real-discount");
+                await LoggerUtils.ErrorAsync("an error occured while parsing course lists from real-discount");
                 result.AddError(e.Message);
             }
 
@@ -93,7 +93,7 @@ namespace FetchAndSaveUdemyCouponsHandler.RealDiscount.Helpers
             }
             catch (Exception e)
             {
-                LoggerUtils.Error(
+                await LoggerUtils.ErrorAsync(
                     $"an error occured while parsing coupon data from discudemy coupon page HTML at {courseUri}", e);
                 result.AddError(e.Message);
             }

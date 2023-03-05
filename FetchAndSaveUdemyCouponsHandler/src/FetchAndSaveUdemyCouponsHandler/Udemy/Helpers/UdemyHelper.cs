@@ -27,7 +27,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
             var getHttpResponseAsStringResult = await HttpHelper.GetStringAsync(udemyCourseDetailsPageUrl, httpClient);
             if (!getHttpResponseAsStringResult.IsSuccess)
             {
-                LoggerUtils.Error(
+                await LoggerUtils.ErrorAsync(
                     $"an error occured while getting HTTP response from Udemy for {udemyCourseDetailsPageUrl}");
                 result.AddError(getHttpResponseAsStringResult.GetFormattedError());
                 return result;
@@ -38,7 +38,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
                 await ParseCourseDetailsAsync(getHttpResponseAsStringResult.Response, isFreeCourse, browsingContext);
             if (!parseCourseDetailsResult.IsSuccess)
             {
-                LoggerUtils.Error($"an error occured while parsing HTTP response from {udemyCourseDetailsPageUrl}");
+                await LoggerUtils.ErrorAsync($"an error occured while parsing HTTP response from {udemyCourseDetailsPageUrl}");
                 result.AddError(parseCourseDetailsResult.GetFormattedError());
                 return result;
             }
@@ -95,12 +95,12 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
                 courseDetails.Language = ParseCourseLanguage(document, courseDetails.CourseUri);
                 courseDetails.LastUpdated = ParseLastUpdated(document, courseDetails.CourseUri);
                 courseDetails.Rating = ParseAggregateRating(mainParsedData, courseDetails.CourseUri);
-                var (instructors, courseId) = ParseInstructorData(document, isFreeCourse, courseDetails.CourseUri);
+                var (instructors, courseId) = await ParseInstructorDataAsync(document, isFreeCourse, courseDetails.CourseUri);
                 courseDetails.Instructors = instructors;
 
                 if (!courseId.HasValue)
                 {
-                    LoggerUtils.Error($"unable to get course-id for {courseDetails.CourseUri}");
+                    await LoggerUtils.ErrorAsync($"unable to get course-id for {courseDetails.CourseUri}");
                     result.AddError("unable to parse course-id");
                     return result;
                 }
@@ -182,7 +182,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
             {
                 result.AddError($"Unable to resolve course data from Udemy API. course-id: {courseId}");
                 result.AddError(e.Message);
-                LoggerUtils.Error($"Unable to resolve course data from Udemy API. course-id: {courseId}", e);
+                await LoggerUtils.ErrorAsync($"Unable to resolve course data from Udemy API. course-id: {courseId}", e);
             }
 
             return result;
@@ -232,7 +232,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
                 .GetString();
         }
 
-        public static (Instructor[]? instructors, int? courseId) ParseInstructorData(IDocument document,
+        public static async Task<(Instructor[]? instructors, int? courseId)> ParseInstructorDataAsync(IDocument document,
             bool isFreeCourse = false,
             string courseUri = null)
         {
@@ -241,7 +241,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
             var instructorDataEle = document.QuerySelector("body");
             if (instructorDataEle == null)
             {
-                LoggerUtils.Error($"could not fetch instructor data, course id for {courseUri}");
+                await LoggerUtils.ErrorAsync($"could not fetch instructor data, course id for {courseUri}");
                 return (null, null);
             }
 
@@ -306,12 +306,12 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
                 return new IsCouponValidResult(getHttpResponseAsStringResult.GetFormattedError());
             }
 
-            var result = ParseCouponValidStatus(getHttpResponseAsStringResult.Response);
+            var result = await ParseCouponValidStatusAsync(getHttpResponseAsStringResult.Response);
             result.CouponData.CouponCode = couponCode;
             return result;
         }
 
-        public static IsCouponValidResult ParseCouponValidStatus(string response)
+        public static async Task<IsCouponValidResult> ParseCouponValidStatusAsync(string response)
         {
             var result = new IsCouponValidResult();
             try
@@ -342,7 +342,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
             {
                 result.AddError("An error occured while parsing coupon status from HTTP response");
                 result.AddError(e.Message);
-                LoggerUtils.Error("An error occured while parsing coupon status from HTTP response", e);
+                await LoggerUtils.ErrorAsync("An error occured while parsing coupon status from HTTP response", e);
                 return result;
             }
 

@@ -29,6 +29,7 @@ namespace FetchAndSaveUdemyCouponsHandler
         // TODO: get from parameter store instead
         private const string GitHubPathSegment = "udemy/v2";
         public static HttpClient UdemyHttpClient;
+        public static IErrorReportingService ErrorReportingService;
         
         public async Task<List<CourseDetailsWithCouponViewModel>> FunctionHandler(FunctionArgs args,
             ILambdaContext context)
@@ -48,6 +49,7 @@ namespace FetchAndSaveUdemyCouponsHandler
                         $"Unable to initialize config values from the parameter store.{Environment.NewLine}ConfigResult: {configResult.ToJson()}");
 
                 UdemyHttpClient = GetUdemyHttpClient(configResult.Config);
+                ErrorReportingService = new GoogleFormErrorReportingService(configResult.Config, httpClient);
                 
                 var lastCrawledData = await InitializeLastCrawledDataAsync(configResult.Config[ConfigurationKeys.Owner], configResult.Config[ConfigurationKeys.Repository], configResult.Config[ConfigurationKeys.Branch], httpClient);
 
@@ -94,7 +96,7 @@ namespace FetchAndSaveUdemyCouponsHandler
             }
             catch (Exception e)
             {
-                LoggerUtils.Error("an error occured while executing the lambda", e);
+                await LoggerUtils.ErrorAsync("an error occured while executing the lambda", e);
             }
 
             return null;
@@ -176,9 +178,18 @@ namespace FetchAndSaveUdemyCouponsHandler
         private static async Task<ParameterStoreConfigurationService.GetConfigResult> InitializeParameterStoreValuesAsync()
         {
             var configurationService = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
-            return await configurationService.GetAsync(ConfigurationKeys.Branch,
+            return await configurationService.GetAsync(
+                ConfigurationKeys.Branch,
                 ConfigurationKeys.Owner,
-                ConfigurationKeys.Repository, ConfigurationKeys.Token, ConfigurationKeys.UdemyCredentials);
+                ConfigurationKeys.Repository, 
+                ConfigurationKeys.Token, 
+                ConfigurationKeys.UdemyCredentials, 
+                
+                ConfigurationKeys.GoogleFormErrorReportingMessageKey,
+                ConfigurationKeys.GoogleFormErrorReportingTimestampKey,
+                ConfigurationKeys.GoogleFormErrorReportingUrlKey,
+                ConfigurationKeys.GoogleFormErrorReportingSubmitUrl
+                );
         }
 
         private static async Task SaveToRepositoryAsync(List<CourseDetailsWithCouponViewModel> coursesWithCoupon,
@@ -212,7 +223,7 @@ namespace FetchAndSaveUdemyCouponsHandler
                     await githubService.CreateFileAsync($"{GitHubPathSegment}/{now}.json", jsonContent, $"add {now}.json");
                 if (!createFileResult.IsSuccess)
                 {
-                    LoggerUtils.Error($"unable to create {now}.json in GitHub. {createFileResult.GetFormattedError()}");
+                    await LoggerUtils.ErrorAsync($"unable to create {now}.json in GitHub. {createFileResult.GetFormattedError()}");
                     return;
                 }
 
@@ -224,13 +235,13 @@ namespace FetchAndSaveUdemyCouponsHandler
                     await githubService.UpdateOrCreateFileAsync($"{GitHubPathSegment}/meta.json", meta.ToJson(), $"added new contents {now}.json");
                 if (!updateOrCreateFileResult.IsSuccess)
                 {
-                    LoggerUtils.Error(
+                    await LoggerUtils.ErrorAsync(
                         $"an error occured while updating the meta file {updateOrCreateFileResult.GetFormattedError()}");
                 }
             }
             catch (Exception e)
             {
-                LoggerUtils.Error("an error occured while saving parsed result in the GitHub repo", e);
+                await LoggerUtils.ErrorAsync("an error occured while saving parsed result in the GitHub repo", e);
             }
         }
 
@@ -266,7 +277,7 @@ namespace FetchAndSaveUdemyCouponsHandler
 
                 if (string.IsNullOrWhiteSpace(coupon.CouponCode))
                 {
-                    LoggerUtils.Error($"coupon code is empty for a premium course {coupon.Url}.");
+                    await LoggerUtils.ErrorAsync($"coupon code is empty for a premium course {coupon.Url}.");
                     return null;
                 }
 
@@ -276,7 +287,7 @@ namespace FetchAndSaveUdemyCouponsHandler
                     coupon.CouponCode, httpClient);
                 if (!isCouponValidResult.IsSuccess)
                 {
-                    LoggerUtils.Error($"an error occured while checking coupon validity for {coupon.Url}");
+                    await LoggerUtils.ErrorAsync($"an error occured while checking coupon validity for {coupon.Url}");
                     return null;
                 }
 
@@ -290,7 +301,7 @@ namespace FetchAndSaveUdemyCouponsHandler
             }
             catch (Exception e)
             {
-                LoggerUtils.Error(
+                await LoggerUtils.ErrorAsync(
                     $"an error occured while resolving course details and coupon code validity {coupon}",
                     e);
             }
@@ -313,7 +324,7 @@ namespace FetchAndSaveUdemyCouponsHandler
                 }
                 catch (Exception e)
                 {
-                    LoggerUtils.Error($"an error occured while getting udemy coupon link from {provider.Name}", e);
+                    await LoggerUtils.ErrorAsync($"an error occured while getting udemy coupon link from {provider.Name}", e);
                 }
 
                 return null;
@@ -346,6 +357,11 @@ namespace FetchAndSaveUdemyCouponsHandler
             public const string Repository = "fc.repository";
             public const string Token = "fc.token";
             public const string UdemyCredentials = "fc.udemyCredentials";
+
+            public const string GoogleFormErrorReportingSubmitUrl = "gf.error.submiturl";
+            public const string GoogleFormErrorReportingTimestampKey = "gf.error.timestamp";
+            public const string GoogleFormErrorReportingMessageKey = "gf.error.message";
+            public const string GoogleFormErrorReportingUrlKey = "gf.error.url";
         }
     }
 }

@@ -44,7 +44,7 @@ namespace FetchAndSaveUdemyCouponsHandler.DiscUdemy.Helpers
             }
             catch (Exception e)
             {
-                LoggerUtils.Error("an error occured while parsing course lists from discudemy");
+                await LoggerUtils.ErrorAsync("an error occured while parsing course lists from discudemy");
                 result.AddError(e.Message);
             }
 
@@ -113,7 +113,7 @@ namespace FetchAndSaveUdemyCouponsHandler.DiscUdemy.Helpers
             }
             catch (Exception e)
             {
-                LoggerUtils.Error("an error occured while parsing coupon data from discudemy coupon page HTML", e);
+                await LoggerUtils.ErrorAsync("an error occured while parsing coupon data from discudemy coupon page HTML", e);
                 result.AddError(e.Message);
             }
 

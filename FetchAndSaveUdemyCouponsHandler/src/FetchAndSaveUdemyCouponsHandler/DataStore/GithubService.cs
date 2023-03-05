@@ -43,7 +43,7 @@ namespace FetchAndSaveUdemyCouponsHandler.DataStore
             }
             catch (Exception e)
             {
-               LoggerUtils.Error($"An error occured while updating {path} on GitHub", e);
+               await LoggerUtils.ErrorAsync($"An error occured while updating {path} on GitHub", e);
                result.AddError(e.Message);
             }
             
@@ -61,7 +61,7 @@ namespace FetchAndSaveUdemyCouponsHandler.DataStore
             }
             catch (Exception e)
             {
-               LoggerUtils.Error($"An error occured while creating {path} on GitHub", e);
+               await LoggerUtils.ErrorAsync($"An error occured while creating {path} on GitHub", e);
                result.AddError(e.Message);
             }
 
@@ -80,7 +80,7 @@ namespace FetchAndSaveUdemyCouponsHandler.DataStore
             catch (Exception e)
             {
                 var msg = $"an error occured while fetching repository content from {_repository}/{path}";
-                LoggerUtils.Error(msg, e);
+                await LoggerUtils.ErrorAsync(msg, e);
                 result.AddError(msg, e);
                 return result;
             }
@@ -106,7 +106,7 @@ namespace FetchAndSaveUdemyCouponsHandler.DataStore
             catch (Exception e)
             {
                 var msg = $"an error occured while updating the file with new content {path}";
-                LoggerUtils.Error(msg, e);
+                await LoggerUtils.ErrorAsync(msg, e);
                 result.AddError(msg, e);
             }
 
@@ -131,7 +131,7 @@ namespace FetchAndSaveUdemyCouponsHandler.DataStore
             catch (Exception e)
             {
                 var msg = $"an error occured while creating file at {path}";
-                LoggerUtils.Error(msg, e);
+                await LoggerUtils.ErrorAsync(msg, e);
                 result.AddError(msg, e);
             }
 

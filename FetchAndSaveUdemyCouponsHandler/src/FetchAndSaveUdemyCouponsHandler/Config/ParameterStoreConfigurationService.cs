@@ -37,7 +37,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Config
             {
                 var msg =
                     $"an error occured while getting config value from the parameter store keys: {string.Join(',', keys)}";
-                LoggerUtils.Error(msg, e);
+                await LoggerUtils.ErrorAsync(msg, e);
                 result.AddError(msg, e);
             }
 
