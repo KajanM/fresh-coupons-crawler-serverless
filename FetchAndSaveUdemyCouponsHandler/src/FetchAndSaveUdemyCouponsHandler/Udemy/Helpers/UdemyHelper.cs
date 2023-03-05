@@ -317,8 +317,19 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
             try
             {
                 var responseJson = JsonSerializer.Deserialize<JsonElement>(response);
-                result.IsValid = responseJson.GetProperty("discount_expiration").GetProperty("data")
-                    .GetProperty("is_enabled").GetBoolean();
+                var doesDiscountExpirationKeyExist = responseJson.TryGetProperty("discount_expiration", out var discountExpirationJsonElement);
+                if (doesDiscountExpirationKeyExist)
+                {
+                    result.IsValid = discountExpirationJsonElement.GetProperty("data")
+                        .GetProperty("is_enabled").GetBoolean();
+                }
+                else
+                {
+                    result.IsValid = responseJson.GetProperty("purchase").GetProperty("data")
+                        .GetProperty("pricing_result")
+                        .GetProperty("has_discount_saving")
+                        .GetBoolean();
+                }
                 if (!result.IsValid)
                 {
                     result.IsSuccess = true;
@@ -327,8 +338,8 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
 
                 result.CouponData = new CouponData
                 {
-                    ExpirationText = responseJson.GetProperty("discount_expiration").GetProperty("data")
-                        .GetProperty("discount_deadline_text").GetString(),
+                    ExpirationText = doesDiscountExpirationKeyExist ? responseJson.GetProperty("discount_expiration").GetProperty("data")
+                        .GetProperty("discount_deadline_text").GetString() : "🤷‍♀",
                     DiscountedPrice = responseJson.GetProperty("purchase").GetProperty("data")
                         .GetProperty("pricing_result").GetProperty("price").GetProperty("price_string").GetString(),
                     OriginalPrice = responseJson.GetProperty("purchase").GetProperty("data")
