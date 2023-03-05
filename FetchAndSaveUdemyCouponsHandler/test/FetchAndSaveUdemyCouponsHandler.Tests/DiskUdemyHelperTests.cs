@@ -94,8 +94,8 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
             #region Assert
 
             Assert.True(parseCouponDataResult.IsSuccess);
-            Assert.Equal("ARABIC-COURSE", parseCouponDataResult.Coupon.CouponCode);
-            Assert.Equal("https://www.udemy.com/course/arabic-language-learn-to-read-arabic-through-short-stories",
+            Assert.Equal("FULLSTACK75", parseCouponDataResult.Coupon.CouponCode);
+            Assert.Equal("https://www.udemy.com/course/php-for-beginners-2021-the-complete-php-mysql-pdo-course",
                 parseCouponDataResult.Coupon.Url);
 
             #endregion
