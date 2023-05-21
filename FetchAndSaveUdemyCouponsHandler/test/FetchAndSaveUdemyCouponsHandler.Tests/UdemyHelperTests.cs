@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -18,6 +19,38 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
         public UdemyHelperTests(ITestOutputHelper outputHelper)
         {
             _outputHelper = outputHelper;
+        }
+
+        [Fact]
+        public async Task UdemyCourseDetailsFetchingLogicShouldSucceed()
+        {
+            var handler = new HttpClientHandler();
+            handler.CookieContainer = new CookieContainer();
+            var httpClient = new HttpClient(handler);
+            httpClient.DefaultRequestHeaders.Add("user-agent",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36");
+            // httpClient.DefaultRequestHeaders.Add(":authority", "www.udemy.com");
+            // httpClient.DefaultRequestHeaders.Add(":method", "GET");
+            // httpClient.DefaultRequestHeaders.Add(":scheme", "https");
+            httpClient.DefaultRequestHeaders.Add("accept",
+                "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8");
+            // httpClient.DefaultRequestHeaders.Add("accept-encoding", "gzip, deflate, br");
+            httpClient.DefaultRequestHeaders.Add("accept-language", "en-GB,en;q=0.5");
+            httpClient.DefaultRequestHeaders.Add("host", "www.udemy.com");
+            httpClient.DefaultRequestHeaders.Add("sec-ch-ua-platform", "Windows");
+            httpClient.DefaultRequestHeaders.Add("sec-fetch-mode", "navigate");
+            httpClient.DefaultRequestHeaders.Add("sec-fetch-dest", "document");
+            httpClient.DefaultRequestHeaders.Add("sec-fetch-site", "none");
+            httpClient.DefaultRequestHeaders.Add("sec-fetch-user", "?1");
+            httpClient.DefaultRequestHeaders.Add("sec-gpc", "1");
+            httpClient.DefaultRequestHeaders.Add("upgrade-insecure-requests", "1");
+            httpClient.DefaultRequestHeaders.Add("connection", "keep-alive");
+            // httpClient.DefaultRequestHeaders.Add("cookie", "seen=1;");
+
+            var response =
+                await UdemyHelper.GetCourseDetailsAsync("https://www.udemy.com/course/the-melody-of-english/", false,
+                    httpClient);
+            Assert.True(response.IsSuccess);
         }
 
         [Fact]
