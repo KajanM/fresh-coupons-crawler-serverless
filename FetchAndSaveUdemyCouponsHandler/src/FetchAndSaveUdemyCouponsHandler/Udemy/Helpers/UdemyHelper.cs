@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Amazon.Lambda.Core;
 using AngleSharp;
 using AngleSharp.Dom;
 using FetchAndSaveUdemyCouponsHandler.Shared.Dtos;
@@ -24,31 +23,99 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
         {
             LoggerUtils.Info($"getting coursed details from Udemy for {udemyCourseDetailsPageUrl}");
             var result = new GetCourseDetailsResult();
-            var getHttpResponseAsStringResult = await HttpHelper.GetStringAsync(udemyCourseDetailsPageUrl, httpClient);
-            if (!getHttpResponseAsStringResult.IsSuccess)
+
+            var responseFromUdemyAffiliateApi = await GetCourseDetailsFromAffiliateApiAsync(udemyCourseDetailsPageUrl, httpClient);
+            if (!responseFromUdemyAffiliateApi.IsSuccess)
             {
                 await LoggerUtils.ErrorAsync(
                     $"an error occured while getting HTTP response from Udemy for {udemyCourseDetailsPageUrl}");
-                result.AddError(getHttpResponseAsStringResult.GetFormattedError());
+                result.AddError(responseFromUdemyAffiliateApi.GetFormattedError());
                 return result;
             }
 
-            LoggerUtils.Info($"parsing HTTP response from {udemyCourseDetailsPageUrl}");
-            var parseCourseDetailsResult =
-                await ParseCourseDetailsAsync(getHttpResponseAsStringResult.Response, isFreeCourse, browsingContext);
-            if (!parseCourseDetailsResult.IsSuccess)
+            LoggerUtils.Info($"extracting required data from affiliate API response for {udemyCourseDetailsPageUrl}");
+            var extractDataFromAffiliateApiResult = await ExtractRequiredDataFromUdemyAffiliateApiAsync(responseFromUdemyAffiliateApi.Data);
+
+            if (!extractDataFromAffiliateApiResult.IsSuccess)
             {
-                await LoggerUtils.ErrorAsync($"an error occured while parsing HTTP response from {udemyCourseDetailsPageUrl}");
-                result.AddError(parseCourseDetailsResult.GetFormattedError());
+                await LoggerUtils.ErrorAsync($"an error occured while extracting Udemy affiliate API response from {udemyCourseDetailsPageUrl}");
+                result.AddError(extractDataFromAffiliateApiResult.GetFormattedError());
                 return result;
             }
 
             LoggerUtils.Info($"successfully parsed HTTP response from {udemyCourseDetailsPageUrl}");
 
-            result.CourseDetails = parseCourseDetailsResult.CourseDetails;
+            result.CourseDetails = extractDataFromAffiliateApiResult.CourseDetails;
             result.IsSuccess = true;
 
             return result;
+        }
+
+        private static async Task<ExtractCourseDetailsFromUdemyAffiliateApiResult>
+            ExtractRequiredDataFromUdemyAffiliateApiAsync(
+                UdemyCourseDetailsAffiliateResponseBindingModel affiliateApiResponse)
+        {
+            var result = new ExtractCourseDetailsFromUdemyAffiliateApiResult();
+            try
+            {
+                result.CourseDetails = new CourseDetailsViewModel
+                {
+                    CourseId = affiliateApiResponse.Id,
+                    Title = affiliateApiResponse.Title,
+                    ShortDescription = affiliateApiResponse.Headline,
+                    LongDescription = affiliateApiResponse.Description,
+                    Language = affiliateApiResponse.Locale.SimpleEnglishTitle,
+                    CourseUri = $"https://www.udemy.com{affiliateApiResponse.Url}",
+                    ImageUri = affiliateApiResponse.Image750x422,
+                    Duration = affiliateApiResponse.ContentInfo,
+                    EnrolledStudentsCount = $"{affiliateApiResponse.NumSubscribers:N} students",
+                    TargetAudiences = affiliateApiResponse.WhoShouldAttendData.Items.ToArray(),
+                    Tags = affiliateApiResponse.CourseHasLabels.Select(l => l.Label.DisplayName).ToArray(),
+                    Rating = new Rating
+                    {
+                        Count = affiliateApiResponse.NumReviews,
+                        AverageValue = affiliateApiResponse.Rating.ToString("F1"),
+                    },
+                    Instructors = affiliateApiResponse.VisibleInstructors.Select(i => new Instructor
+                    {
+                        Name = i.DisplayName,
+                        Url = $"{i.Url}",
+                        AverageRating = affiliateApiResponse.AvgRating
+                    }).ToArray(),
+                };
+                result.IsSuccess = true;
+            }
+            catch (Exception e)
+            {
+                await LoggerUtils.ErrorAsync("Unable to extract course details from Udemy affiliate API response");
+                result.AddError(e.Message);
+            }
+
+            return result;
+        }
+        
+        /// <param name="udemyCourseDetailsPageUrl">https://www.udemy.com/course/blogging-and-influencer-marketing/</param>
+        /// <param name="udemyClient"></param>
+        /// <returns></returns>
+        public static async Task<BaseResultWithPayload<UdemyCourseDetailsAffiliateResponseBindingModel>> GetCourseDetailsFromAffiliateApiAsync(string udemyCourseDetailsPageUrl, HttpClient udemyClient)
+        {
+            var courseSlug = GetCourseSlugFromDetailsPageUrl(udemyCourseDetailsPageUrl);
+            var apiUrl = GetUdemyAffiliateApiUrl(courseSlug);
+            var response =
+                await HttpHelper.GetAsync<UdemyCourseDetailsAffiliateResponseBindingModel>(apiUrl,
+                    udemyClient);
+
+            return response;
+        }
+
+        private static string GetUdemyAffiliateApiUrl(string courseSlug)
+        {
+            return $"https://www.udemy.com/api-2.0/courses/{courseSlug}?fields[course]=@all&fields[slider_menu]=@all";
+        }
+
+        private static string GetCourseSlugFromDetailsPageUrl(string udemyCourseDetailsPageUrl)
+        {
+            return udemyCourseDetailsPageUrl.Split("https://www.udemy.com/course/")[1].Split("/")[0];
         }
 
         public class GetCourseDetailsResult : BaseResult
@@ -288,6 +355,12 @@ namespace FetchAndSaveUdemyCouponsHandler.Udemy.Helpers
                 .GetAttribute(DomSelectors.DataPropsAttribute).Trim());
         }
 
+        
+        public class ExtractCourseDetailsFromUdemyAffiliateApiResult : BaseResult
+        {
+            public CourseDetailsViewModel CourseDetails { get; set; }
+        }
+        
         public class ParseCourseDetailsResult : BaseResult
         {
             public CourseDetailsViewModel CourseDetails { get; set; }

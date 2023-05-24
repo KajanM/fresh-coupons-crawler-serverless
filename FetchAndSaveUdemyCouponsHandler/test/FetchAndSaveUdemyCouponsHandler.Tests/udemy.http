@@ -1,0 +1,3 @@
+### Home
+GET https://www.udemy.com/api-2.0/course-landing-components/4412876/me/?components=slider_menu,buy_button,deal_badge,discount_expiration,price_text,incentives,purchase,redeem_coupon,money_back_guarantee,base_purchase_section,purchase_tabs_context,lifetime_access_context,available_coupons,gift_this_course,buy_for_team,landing_page,instructor
+

@@ -2,29 +2,29 @@
 {
     public class CourseDetailsViewModel
     {
-        public int CourseId { get; set; }
+        public int CourseId { get; set; } // id
 
-        public string Title { get; set; }
+        public string Title { get; set; } // title
 
-        public string ShortDescription { get; set; }
+        public string ShortDescription { get; set; } // headline
 
-        public string LongDescription { get; set; }
+        public string LongDescription { get; set; } // description
 
-        public string Language { get; set; }
+        public string Language { get; set; } // locale.locale; locale.simple_english_title
 
-        public string CourseUri { get; set; }
+        public string CourseUri { get; set; } // url
 
-        public string ImageUri { get; set; }
+        public string ImageUri { get; set; } // image_100x100; 750x422
 
-        public string Duration { get; set; }
+        public string Duration { get; set; } // content_info
 
-        public string EnrolledStudentsCount { get; set; }
+        public string EnrolledStudentsCount { get; set; } // num_subscribers; format with , and add students
 
-        public string LastUpdated { get; set; }
+        public string LastUpdated { get; set; } // todo
 
-        public string[] TargetAudiences { get; set; }
+        public string[] TargetAudiences { get; set; } // who_should_attend_data.items; target_audiences
 
-        public string[] Tags { get; set; }
+        public string[] Tags { get; set; } // course_has_labels.label.display_name
 
 
         public Rating Rating { get; set; }
@@ -40,9 +40,9 @@
 
     public class Rating
     {
-        public int? Count { get; set; }
+        public int? Count { get; set; } // num_reviews
 
-        public string AverageValue { get; set; }
+        public string AverageValue { get; set; } // rating
 
         public override string ToString()
         {
@@ -56,11 +56,11 @@
 
         public string Url { get; set; }
 
-        public int? TotalNumberOfStudents { get; set; }
+        public int? TotalNumberOfStudents { get; set; } // todo
 
-        public int? TotalNumberOfReviews { get; set; }
+        public int? TotalNumberOfReviews { get; set; } // todo
 
-        public double? AverageRating { get; set; }
+        public double? AverageRating { get; set; } // todo
 
         public override string ToString()
         {

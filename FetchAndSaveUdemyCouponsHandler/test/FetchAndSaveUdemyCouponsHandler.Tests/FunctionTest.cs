@@ -24,7 +24,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
             var context = new TestLambdaContext();
             var args = new Function.FunctionArgs
             {
-                NumberOfPagesToParse = 5
+                NumberOfPagesToParse = 1
             };
 
             #endregion

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using FetchAndSaveUdemyCouponsHandler.Shared.Dtos;
 using FetchAndSaveUdemyCouponsHandler.Shared.Extensions;
+using Newtonsoft.Json;
 
 namespace FetchAndSaveUdemyCouponsHandler.Shared.Helpers
 {
@@ -40,12 +40,13 @@ namespace FetchAndSaveUdemyCouponsHandler.Shared.Helpers
 
             try
             {
-                var contentStream = await response.Content.ReadAsStreamAsync();
-                var deserializeOptions = new JsonSerializerOptions
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var deserializeOptions = new JsonSerializerSettings
                 {
-                    PropertyNameCaseInsensitive = true
+                    DefaultValueHandling = DefaultValueHandling.Populate,
+                    NullValueHandling = NullValueHandling.Include,
                 };
-                result.Data = await JsonSerializer.DeserializeAsync<TResponse>(contentStream, deserializeOptions);
+                result.Data = JsonConvert.DeserializeObject<TResponse>(responseBody, deserializeOptions);
                 result.IsSuccess = true;
 
                 return result;

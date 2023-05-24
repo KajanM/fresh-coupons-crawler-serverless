@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Amazon;
 using AngleSharp;
@@ -19,6 +18,30 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
         public UdemyHelperTests(ITestOutputHelper outputHelper)
         {
             _outputHelper = outputHelper;
+        }
+        
+        [Fact]
+        public async Task FetchingCourseDetailsFromAffiliateApiShouldSucceed()
+        {
+            #region Arrage 
+
+            var udemyClient = await GetUdemyClientAsync();
+
+            #endregion
+
+            #region Act
+
+            var response = await UdemyHelper.GetCourseDetailsFromAffiliateApiAsync(
+                "https://www.udemy.com/course/mobile-app-development-for-people-with-autism-dyslexia-etc", udemyClient);
+
+            #endregion
+
+            #region Assert
+
+            Assert.True(response.IsSuccess);
+            Assert.Equal("course", response.Data.Class);
+
+            #endregion
         }
 
         [Fact]
@@ -126,9 +149,7 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
         {
             #region Arrange
 
-            var service = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
-            var getConfigResult = await service.GetAsync(Function.ConfigurationKeys.UdemyCredentials);
-            var httpClient = Function.GetUdemyHttpClient(getConfigResult.Config);
+            var httpClient = await GetUdemyClientAsync();
 
             #endregion
 
@@ -143,6 +164,13 @@ namespace FetchAndSaveUdemyCouponsHandler.Tests
             Assert.True(resolveUdemyDataFromApiResult.IsSuccess);
 
             #endregion
+        }
+
+        private async Task<HttpClient> GetUdemyClientAsync()
+        {
+            var service = new ParameterStoreConfigurationService(RegionEndpoint.APSouth1);
+            var getConfigResult = await service.GetAsync(Function.ConfigurationKeys.UdemyCredentials);
+            return Function.GetUdemyHttpClient(getConfigResult.Config);
         }
     }
 }

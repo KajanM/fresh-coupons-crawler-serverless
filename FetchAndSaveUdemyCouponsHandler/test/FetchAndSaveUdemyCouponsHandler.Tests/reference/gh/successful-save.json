@@ -1,0 +1,1110 @@
+{
+  "coursesWithCoupon": {
+    "https://www.udemy.com/course/mobile-app-development-for-people-with-autism-dyslexia-etc/": {
+      "courseDetails": {
+        "courseId": 4316968,
+        "title": "Mobile App Development for Autism, Dyslexia \u0026 etc in 2023",
+        "shortDescription": "#1 Mobile App Development Course for Autism, Dyslexia Individuals: The Step-by-Step Guide to Mobile App Development",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/mobile-app-development-for-people-with-autism-dyslexia-etc/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4316968_d6eb.jpg",
+        "duration": "8 total hours",
+        "enrolledStudentsCount": "15,949 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "This program is specifically for people with Autism / Autistic, Asperger\u2019s Syndrome, Dyslexia, Cerebral Palsy etc)",
+          "Special Needs Individuals who have a passion for technology and are interested in creating apps that cater to their unique needs and challenges.",
+          "Students studying special education or assistive technology who want to expand their knowledge and skills in mobile app development.",
+          "Adults with autism or dyslexia who are looking for a fulfilling career that allows them to use their skills and interests to make a positive impact in the world."
+        ],
+        "tags": [
+          "Development",
+          "Mobile Development",
+          "Special Education"
+        ],
+        "rating": {
+          "count": 127,
+          "averageValue": "4.8"
+        },
+        "instructors": [
+          {
+            "name": "Infinite Minds Academy",
+            "url": "/user/infinite-minds-academy-2/",
+            "totalNumberOfStudents": 29159,
+            "totalNumberOfReviews": 425,
+            "averageRating": 4.767209237226278
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "4673105CC26C7C9703EB",
+        "originalPrice": "\u20B9799",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/using-powershell-advanced-automated-file-management/": {
+      "courseDetails": {
+        "courseId": 3676090,
+        "title": "File \u0026 Folder Management Using PowerShell",
+        "shortDescription": "Learn File, Folder and Location Management With PowerShell - Practicing Field case examples, Scripts \u0026 Demos",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/using-powershell-advanced-automated-file-management/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/3676090_273f.jpg",
+        "duration": "2.5 total hours",
+        "enrolledStudentsCount": "55,317 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Techies who want to learn PowerShell",
+          "IT Admins who want to automate File, Registry and Location Management",
+          "Techies who want to lean Advanced level Files, Folders, path and Location Management",
+          "Techies who want to Learn a common Tool to Manage Most of the Leading Platforms like AWS, Azure, Google Cloud, Citrix, VMware etc."
+        ],
+        "tags": [
+          "IT \u0026 Software",
+          "Other IT \u0026 Software",
+          "PowerShell"
+        ],
+        "rating": {
+          "count": 289,
+          "averageValue": "4.5"
+        },
+        "instructors": [
+          {
+            "name": "Luxmi Narayan",
+            "url": "/user/my-learnings-online/",
+            "totalNumberOfStudents": 81137,
+            "totalNumberOfReviews": 972,
+            "averageRating": 4.3905964804878055
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "MAY-OFFER3",
+        "originalPrice": "\u20B92,599",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/blogging-and-influencer-marketing/": {
+      "courseDetails": {
+        "courseId": 4793912,
+        "title": "Blogging and Influencer Marketing",
+        "shortDescription": "Manual on How to Use Influencer Marketing to Grow Your Business Online and Reach Your Marketing Goals!",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/blogging-and-influencer-marketing/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4793912_d862.jpg",
+        "duration": "2 total hours",
+        "enrolledStudentsCount": "19,080 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Business owners who want to learn how to work with influencers to promote their brand, products, or services",
+          "Social media managers who are seeking to enhance their knowledge and skills in the field of influencer marketing",
+          "Anyone who wants to learn how to launch influencer marketing campaigns"
+        ],
+        "tags": [
+          "Marketing",
+          "Social Media Marketing",
+          "Influencer Marketing"
+        ],
+        "rating": {
+          "count": 135,
+          "averageValue": "4.4"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          },
+          {
+            "name": "Zoya Lobod",
+            "url": "/user/zoya-lobod/",
+            "totalNumberOfStudents": 19080,
+            "totalNumberOfReviews": 135,
+            "averageRating": 4.4332767
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "BLOG1505",
+        "originalPrice": "\u20B91,999",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/marketing-analytics-pricing-strategies-and-price-analytics/": {
+      "courseDetails": {
+        "courseId": 2347360,
+        "title": "Marketing Analytics: Pricing Strategies and Price Analytics",
+        "shortDescription": "Boost Profit by learning diff Pricing Strategies \u0026 Advanced Pricing Models in Excel. Complete Pricing Analytics in Excel",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/marketing-analytics-pricing-strategies-and-price-analytics/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/2347360_e1f1_4.jpg",
+        "duration": "3.5 total hours",
+        "enrolledStudentsCount": "128,841 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Anyone curious to master Pricing Analytics from beginner to advanced"
+        ],
+        "tags": [
+          "Marketing",
+          "Marketing Analytics \u0026 Automation",
+          "Pricing"
+        ],
+        "rating": {
+          "count": 1239,
+          "averageValue": "4.1"
+        },
+        "instructors": [
+          {
+            "name": "Start-Tech Academy",
+            "url": "/user/start-tech-academy/",
+            "totalNumberOfStudents": 1633160,
+            "totalNumberOfReviews": 82921,
+            "averageRating": 4.4591128171187835
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "8F71230",
+        "originalPrice": "\u20B92,499",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/digital-dropshipping-masterkurs/": {
+      "courseDetails": {
+        "courseId": 4090068,
+        "title": "Digital Dropshipping: Das NEUE Gesch\u00E4ftsmodell 2023",
+        "shortDescription": "#1 Digitaler Dropshipping Kurs: Die Schritt f\u00FCr Schritt Anleitung f\u00FCr den Verkauf \u0026 Vermarktung von DIGITALEN Produkten",
+        "longDescription": null,
+        "language": "Deutsch",
+        "courseUri": "https://www.udemy.com/course/digital-dropshipping-masterkurs/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4090068_72af_4.jpg",
+        "duration": "4 total hours",
+        "enrolledStudentsCount": "13.774 Teilnehmer",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Anf\u00E4nger, die sich online selbst\u00E4ndig machen m\u00F6chten und Skills f\u00FCrs Leben lernen wollen",
+          "All die Leute die keine Lust mehr auf das alte Dropshipping Model mit chinesischer H\u00E4ndleranbindung haben",
+          "Jeder der mehr Freiheit im Leben haben m\u00F6chte und Geld von \u00FCberall aus der Welt verdienen will",
+          "Angestellte, die nebenbei ein Business aufbauen und in die Selbst\u00E4ndigkeit kommen m\u00F6chten"
+        ],
+        "tags": [
+          "Business",
+          "E-Commerce",
+          "Dropshipping"
+        ],
+        "rating": {
+          "count": 309,
+          "averageValue": "4.6"
+        },
+        "instructors": [
+          {
+            "name": "Paul Heidiri",
+            "url": "/user/paul-heidiri/",
+            "totalNumberOfStudents": 35582,
+            "totalNumberOfReviews": 818,
+            "averageRating": 4.572991473856209
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "FREECOURSE2023",
+        "originalPrice": "799\u00A0\u20B9",
+        "discountedPrice": "Kostenlos",
+        "expirationText": "2 Tage",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/google-ads-for-beginners-how-to-drive-sales-with-ppc/": {
+      "courseDetails": {
+        "courseId": 4579874,
+        "title": "Google Ads 2023: How to Drive Sales With PPC!",
+        "shortDescription": "Get started with Google Ads and launch effective PPC advertising campaigns to reach new customers and grow your business",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/google-ads-for-beginners-how-to-drive-sales-with-ppc/",
+        "imageUri": "https://img-b.udemycdn.com/course/750x422/4579874_c2b1_3.jpg",
+        "duration": "2.5 total hours",
+        "enrolledStudentsCount": "42,237 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Anyone who wants to master the knowledge of PPC advertising - this Google Ads course will allow you to gain the necessary skills to launch successful campaigns.",
+          "Marketers - this course will allow you to expand your skills and teach you how to work with paid advertising and promote your projects with Google Ads. You will acquire the necessary knowledge to further your career.",
+          "Entrepreneurs - Entrepreneurs will be able to use the acquired skills to promote their own projects on the internet. Learn how to create, optimize and analyze advertising campaigns, increase sales, targeted traffic, and leads.",
+          "PPC Specialists - This course will help you systematize your knowledge about paid advertising. You will master the skills of creating, optimizing, and analyzing search advertising campaigns, learn how to optimize the cost per click, conversion, and client."
+        ],
+        "tags": [
+          "Marketing",
+          "Paid Advertising",
+          "Google Ads (Adwords)"
+        ],
+        "rating": {
+          "count": 214,
+          "averageValue": "4.2"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "PPC1505",
+        "originalPrice": "\u20B92,299",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/javascript-practicals-crash-course/": {
+      "courseDetails": {
+        "courseId": 4200228,
+        "title": "Javascript Practicals Crash Course",
+        "shortDescription": "Learn javascript Concepts With Javascript Practical Demonstrations",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/javascript-practicals-crash-course/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4200228_c917_2.jpg",
+        "duration": "38 total mins",
+        "enrolledStudentsCount": "80,072 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "For Javascript  Programming Beginners",
+          "For People New to Javascript",
+          "For People Who want to learn Javascript Fundamentals and later Transition into Web Development"
+        ],
+        "tags": [
+          "Development",
+          "Programming Languages",
+          "JavaScript"
+        ],
+        "rating": {
+          "count": 787,
+          "averageValue": "4.2"
+        },
+        "instructors": [
+          {
+            "name": "PROPER DOT INSTITUTE",
+            "url": "/user/vivek-dahibhate-2/",
+            "totalNumberOfStudents": 361682,
+            "totalNumberOfReviews": 7992,
+            "averageRating": 4.261235894341944
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "B490D3E19B0A2B6A54BB",
+        "originalPrice": "\u20B9799",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/fostering-creativity-in-children/": {
+      "courseDetails": {
+        "courseId": 1294796,
+        "title": "Fire Up Creativity in Your Child",
+        "shortDescription": "Increase Your Child\u0027s Creative Quotient to 10X",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/fostering-creativity-in-children/",
+        "imageUri": "https://img-b.udemycdn.com/course/750x422/1294796_acd5.jpg",
+        "duration": "3 total hours",
+        "enrolledStudentsCount": "46,422 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Parents who are willing to foster creativity and creative thinking pattern in their children"
+        ],
+        "tags": [
+          "Personal Development",
+          "Parenting \u0026 Relationships",
+          "Creativity"
+        ],
+        "rating": {
+          "count": 253,
+          "averageValue": "4.0"
+        },
+        "instructors": [
+          {
+            "name": "Libby Seery Founder of Renaissance Life Therapies",
+            "url": "/user/libbyseery/",
+            "totalNumberOfStudents": 234222,
+            "totalNumberOfReviews": 27839,
+            "averageRating": 4.323693678071835
+          },
+          {
+            "name": "Susmita Dutta",
+            "url": "/user/susmitadutta/",
+            "totalNumberOfStudents": 342396,
+            "totalNumberOfReviews": 7449,
+            "averageRating": 4.236905194982079
+          },
+          {
+            "name": "Ash Akshay Goel",
+            "url": "/user/ashgoel/",
+            "totalNumberOfStudents": 342396,
+            "totalNumberOfReviews": 7449,
+            "averageRating": 4.236905194982079
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "MAY2023FREE01",
+        "originalPrice": "\u20B91,999",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/customer-valuation-for-entrepreneur-and-marketers/": {
+      "courseDetails": {
+        "courseId": 2444960,
+        "title": "Marketing Analytics: Customer Value and Promotion Strategy",
+        "shortDescription": "Learn to calculate Customer Lifetime Value using DCF \u0026 advanced models \u0026 use it to increase the company\u2019s profitability",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/customer-valuation-for-entrepreneur-and-marketers/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/2444960_169c.jpg",
+        "duration": "1.5 total hours",
+        "enrolledStudentsCount": "71,927 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Anyone curious to master Customer valuation models from beginner to advanced"
+        ],
+        "tags": [
+          "Marketing",
+          "Marketing Analytics \u0026 Automation",
+          "Marketing Analytics"
+        ],
+        "rating": {
+          "count": 695,
+          "averageValue": "4.1"
+        },
+        "instructors": [
+          {
+            "name": "Start-Tech Academy",
+            "url": "/user/start-tech-academy/",
+            "totalNumberOfStudents": 1633160,
+            "totalNumberOfReviews": 82921,
+            "averageRating": 4.4591128171187835
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "CFFE32E",
+        "originalPrice": "\u20B92,299",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/keyword_research/": {
+      "courseDetails": {
+        "courseId": 5155172,
+        "title": "Keyword Research From Scratch. Unlock New SEO Opportunities",
+        "shortDescription": "Carry out an in-depth keyword research: from the brainstorming ideas to clustering and placing the semantics",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/keyword_research/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/5155172_4164.jpg",
+        "duration": "1.5 total hours",
+        "enrolledStudentsCount": "9,961 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Beginning SEO specialists who want to take a structured approach to the process of keyword research",
+          "Digital marketing specialists who are willing to use keywords as a tool for driving organic traffic",
+          "Business owners who deal with website optimization on their own and want to rank high on Google"
+        ],
+        "tags": [
+          "Marketing",
+          "Search Engine Optimization",
+          "Keyword Research"
+        ],
+        "rating": {
+          "count": 48,
+          "averageValue": "4.5"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "KEY1505",
+        "originalPrice": "\u20B9799",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/userstory/": {
+      "courseDetails": {
+        "courseId": 477958,
+        "title": "User Stories for Agile Scrum\u002BProduct Owner\u002BBusiness Analysis",
+        "shortDescription": "Complete overview of requirements, user story template, epics, splitting, acceptance criteria \u002Bbusiness analyst examples",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/userstory/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/477958_ae48.jpg",
+        "duration": "1 total hour",
+        "enrolledStudentsCount": "56,099 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Product Owners, Agile Business Analysts, Agile or Scrum Team Members and Business OWners",
+          "Anyone who wants a complete overview of Agile User Stories and certainty that they are getting the facts taught by an industry expert",
+          "Someone preparing to be a Product Owner, Agile Business Analyst, Scrum Master or Agile Team Member Anyone who wants to know how to be proficient with Epics, Themes, Stories and Requirements",
+          "A candidate who wants answers to frequently misunderstood points within about User Stories An expert candidate who wants a concise, quick refresher on User Stories"
+        ],
+        "tags": [
+          "Business",
+          "Project Management",
+          "Agile"
+        ],
+        "rating": {
+          "count": 2322,
+          "averageValue": "3.9"
+        },
+        "instructors": [
+          {
+            "name": "Paul Ashun",
+            "url": "/user/paulvii2/",
+            "totalNumberOfStudents": 498035,
+            "totalNumberOfReviews": 50350,
+            "averageRating": 4.42608595789192
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "150523_FREE",
+        "originalPrice": "\u20B91,299",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/linear-regression-analysis-using-python-hindi/": {
+      "courseDetails": {
+        "courseId": 4555584,
+        "title": "Machine Learning Basics in Hindi \u0939\u093F\u0902\u0926\u0940 - Regression Analysis",
+        "shortDescription": "\u0939\u093F\u0902\u0926\u0940 \u092E\u0947\u0902 \u0938\u0940\u0916\u0947\u0902 Basics of Machine Learning - covers Simple Linear Regression \u0026 Multiple Linear regression in Python",
+        "longDescription": null,
+        "language": "Hindi",
+        "courseUri": "https://www.udemy.com/course/linear-regression-analysis-using-python-hindi/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4555584_d0c9_2.jpg",
+        "duration": "5.5 total hours",
+        "enrolledStudentsCount": "22,636 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Anyone curious to master Linear Regression from beginner to Advanced in short span of time",
+          "People pursuing a career in data science"
+        ],
+        "tags": [
+          "Development",
+          "Data Science",
+          "Regression Analysis"
+        ],
+        "rating": {
+          "count": 289,
+          "averageValue": "4.3"
+        },
+        "instructors": [
+          {
+            "name": "Start-Tech Trainings",
+            "url": "/user/start-tech-academy-2/",
+            "totalNumberOfStudents": 89759,
+            "totalNumberOfReviews": 2281,
+            "averageRating": 4.463261125373136
+          },
+          {
+            "name": "Start-Tech Academy",
+            "url": "/user/start-tech-academy/",
+            "totalNumberOfStudents": 1633160,
+            "totalNumberOfReviews": 82921,
+            "averageRating": 4.4591128171187835
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "6CA5C64",
+        "originalPrice": "\u20B92,499",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/etsy-promotion/": {
+      "courseDetails": {
+        "courseId": 4999108,
+        "title": "Etsy: The Ultimate Guide to Boosting Your Business",
+        "shortDescription": "Set up your online shop and start selling on Etsy. Find out more about ways to promote your business on this marketplace",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/etsy-promotion/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4999108_6e6d.jpg",
+        "duration": "2.5 total hours",
+        "enrolledStudentsCount": "17,731 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Business owners who want to learn how to sell online with the help of Etsy marketplace",
+          "Digital marketers who want to make promotion on Etsy part of their overall marketing strategy",
+          "All digital specialists who want to start advising individual entrepreneurs and companies on business development"
+        ],
+        "tags": [
+          "Business",
+          "E-Commerce",
+          "Etsy"
+        ],
+        "rating": {
+          "count": 75,
+          "averageValue": "4.4"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          },
+          {
+            "name": "Julia Gubanova",
+            "url": "/user/iuliia-gubanova-3/",
+            "totalNumberOfStudents": 17731,
+            "totalNumberOfReviews": 75,
+            "averageRating": 4.4226317
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "ETSY1505",
+        "originalPrice": "\u20B91,999",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/powershell-functions-master-class/": {
+      "courseDetails": {
+        "courseId": 4290468,
+        "title": "PowerShell Functions Master Class",
+        "shortDescription": "Learn all about One of the most Powerful Scripting Capability - PowerShell Functions",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/powershell-functions-master-class/",
+        "imageUri": "https://img-b.udemycdn.com/course/750x422/4290468_8982_3.jpg",
+        "duration": "1 total hour",
+        "enrolledStudentsCount": "50,215 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "IT People who want to automate repetitive task and make their life easy",
+          "Techies who want to learn PowerShell"
+        ],
+        "tags": [
+          "IT \u0026 Software",
+          "Other IT \u0026 Software",
+          "PowerShell"
+        ],
+        "rating": {
+          "count": 298,
+          "averageValue": "4.2"
+        },
+        "instructors": [
+          {
+            "name": "Luxmi Narayan",
+            "url": "/user/my-learnings-online/",
+            "totalNumberOfStudents": 81137,
+            "totalNumberOfReviews": 972,
+            "averageRating": 4.3905964804878055
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "MAY-OFFER3",
+        "originalPrice": "\u20B91,499",
+        "discountedPrice": "Free",
+        "expirationText": "3 days",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/masterclass-skalierung-5-phasen-strategie/": {
+      "courseDetails": {
+        "courseId": 4954808,
+        "title": "Masterclass Skalierung 2023: Die 5-Phasen Strategie",
+        "shortDescription": "Die Schritt f\u00FCr Schritt Skalierungs Anleitung zu 6-stelligen Ums\u00E4tzen",
+        "longDescription": null,
+        "language": "Deutsch",
+        "courseUri": "https://www.udemy.com/course/masterclass-skalierung-5-phasen-strategie/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4954808_e18a_2.jpg",
+        "duration": "2 total hours",
+        "enrolledStudentsCount": "3.799 Teilnehmer",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Jeder der sein Marketing / Werbeanzeigen skalieren m\u00F6chte und diesen Kurs als roten Faden benutzt",
+          "Anf\u00E4nger, die online Produkte bewerben m\u00F6chten und Skills f\u00FCrs Leben lernen wollen",
+          "Firmen, welche eine neue Skalierungsregel ben\u00F6tigen und 6-stellige Ums\u00E4tze erzielen m\u00F6chten"
+        ],
+        "tags": [
+          "Marketing",
+          "Marketinganalyse \u0026 -automatisierung",
+          "Digitales Marketing"
+        ],
+        "rating": {
+          "count": 51,
+          "averageValue": "5.0"
+        },
+        "instructors": [
+          {
+            "name": "Paul Heidiri",
+            "url": "/user/paul-heidiri/",
+            "totalNumberOfStudents": 35582,
+            "totalNumberOfReviews": 818,
+            "averageRating": 4.572991473856209
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "FREECOURSE2023",
+        "originalPrice": "799\u00A0\u20B9",
+        "discountedPrice": "Kostenlos",
+        "expirationText": "2 Tage",
+        "discountPercentage": 100
+      }
+    },
+    "https://www.udemy.com/course/digital-marketing-strategy-from-scratch-course/": {
+      "courseDetails": {
+        "courseId": 3833784,
+        "title": "Digital Marketing Strategist. Unlock your career growth",
+        "shortDescription": "Become a digital marketing expert. Learn proven digital marketing strategies with my roadmap and 24/7 expert support",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/digital-marketing-strategy-from-scratch-course/",
+        "imageUri": "https://img-b.udemycdn.com/course/750x422/3833784_12ca_8.jpg",
+        "duration": "20 total hours",
+        "enrolledStudentsCount": "173,577 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Everyone who wants to master online marketing, launch an effective digital marketing strategy, develop online businesses, and increase sales and profit.",
+          "People who are interested in learning an online profession \u2013 This digital marketing course will allow you to gain the skills and digital marketing certification needed for a successful career in digital marketing.",
+          "Marketers \u2013 This digital marketing training lets you extend your skills to include marketing in a digital context, allowing you to better serve your clients as a marketing specialist.",
+          "Entrepreneurs \u2013 Entrepreneurs can use their new knowledge from this Digital Marketing bundle to run their own online digital marketing until they have the funds to hire a digital marketing specialist.",
+          "Internet marketers - This course, created by industry experts, will help you ensure that your digital marketing skills are up-to-date and help you market yourself to clients, furthering your digital marketing career.",
+          "SEO specialists - This complete digital marketing training will help you ensure that your SEO skills are up-to-date and help you market yourself to clients, furthering your career.",
+          "Content marketers - after completing this digital marketing course, you will learn how to create a content plan based on content marketing strategy. You will know how to work with keyword analysis tools, and based on data, create popular content that sells.",
+          "SMM specialists - this online course will help you to build your social media presence, and make you a master of creating relevant content for your target audience and followers on media."
+        ],
+        "tags": [
+          "Marketing",
+          "Digital Marketing"
+        ],
+        "rating": {
+          "count": 2655,
+          "averageValue": "4.3"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "DMS1204",
+        "originalPrice": "\u20B92,799",
+        "discountedPrice": "\u20B9389",
+        "expirationText": "\uD83E\uDD37\u200D\u2640",
+        "discountPercentage": 86
+      }
+    },
+    "https://www.udemy.com/course/essential-tools-for-working-remotely-google-apps/": {
+      "courseDetails": {
+        "courseId": 2938794,
+        "title": "Tools for Working From Home - Google Apps, Trello \u0026 Zoom",
+        "shortDescription": "Free tools - Google Docs, Sheets, Slides, Trello \u0026 Zoom to maximize productivity while working remotely #WorkFromHome",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/essential-tools-for-working-remotely-google-apps/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/2938794_4c37_2.jpg",
+        "duration": "2 total hours",
+        "enrolledStudentsCount": "61,966 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Working professionals"
+        ],
+        "tags": [
+          "Office Productivity",
+          "Other Office Productivity",
+          "Working Remotely"
+        ],
+        "rating": {
+          "count": 424,
+          "averageValue": "4.0"
+        },
+        "instructors": [
+          {
+            "name": "Start-Tech Academy",
+            "url": "/user/start-tech-academy/",
+            "totalNumberOfStudents": 1633160,
+            "totalNumberOfReviews": 82921,
+            "averageRating": 4.4591128171187835
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "C6418D",
+        "originalPrice": "\u20B92,299",
+        "discountedPrice": "\u20B9389",
+        "expirationText": "\uD83E\uDD37\u200D\u2640",
+        "discountPercentage": 83
+      }
+    },
+    "https://www.udemy.com/course/email-marketing-for-beginners-course/": {
+      "courseDetails": {
+        "courseId": 4204914,
+        "title": "Email Marketing 2023. Increase sales with Email Marketing!",
+        "shortDescription": "A hands-on guide to Email Marketing for beginners. Learn how to boost your sales with effective Email Marketing Strategy",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/email-marketing-for-beginners-course/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4204914_120f_4.jpg",
+        "duration": "2 total hours",
+        "enrolledStudentsCount": "51,965 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Aspiring professionals interested in pursuing an online career - This Email Marketing course will give you the skills you need to pursue a career in digital marketing. You will learn how to implement email marketing into your marketing strategy.",
+          "Marketers - This course will expand your skills and teach you how to build a subscription list, set up an email campaign and measure email marketing performance.",
+          "Entrepreneurs - Entrepreneurs will be able to use their newly acquired skills to send out emails to their customers, read important metrics.",
+          "Internet Marketers - This course will help you learn how to use email marketing for attracting and retaining customers. After completing this course, you will bring more value to your company and further your career."
+        ],
+        "tags": [
+          "Marketing",
+          "Digital Marketing",
+          "Email Marketing"
+        ],
+        "rating": {
+          "count": 442,
+          "averageValue": "4.4"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          },
+          {
+            "name": "SendPulse Academy",
+            "url": "/user/sendpulse-academy/",
+            "totalNumberOfStudents": 73407,
+            "totalNumberOfReviews": 750,
+            "averageRating": 4.455073964999999
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "EM1204",
+        "originalPrice": "\u20B91,999",
+        "discountedPrice": "\u20B9389",
+        "expirationText": "\uD83E\uDD37\u200D\u2640",
+        "discountPercentage": 81
+      }
+    },
+    "https://www.udemy.com/course/account-based-marketing-increase-your-b2b-efficiency/": {
+      "courseDetails": {
+        "courseId": 5036484,
+        "title": "Account Based Marketing - ABM: Increase Your B2B Efficiency",
+        "shortDescription": "Implement a new ABM marketing strategy to enhance the number of clients and their quality in B2B",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/account-based-marketing-increase-your-b2b-efficiency/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/5036484_e268.jpg",
+        "duration": "1.5 total hours",
+        "enrolledStudentsCount": "12,105 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Marketers who wish to implement this strategy or work with it in the future",
+          "Business owners who desire to increase the client count and connect marketing with sales",
+          "Account managers and salespeople who want to increase their B2B sales percentage",
+          "Anyone who is interested in understanding the basics of account-based marketing"
+        ],
+        "tags": [
+          "Marketing",
+          "Growth Hacking",
+          "Marketing Strategy"
+        ],
+        "rating": {
+          "count": 90,
+          "averageValue": "4.3"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "ABM1404",
+        "originalPrice": "\u20B91,999",
+        "discountedPrice": "\u20B9389",
+        "expirationText": "\uD83E\uDD37\u200D\u2640",
+        "discountPercentage": 81
+      }
+    },
+    "https://www.udemy.com/course/google-analytics-certification-how-to-pass-the-exam/": {
+      "courseDetails": {
+        "courseId": 4724096,
+        "title": "Google Analytics Certification. How to Pass the Exam",
+        "shortDescription": "Learn the theory and remember the practical settings in GA Universal and GA 4",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/google-analytics-certification-how-to-pass-the-exam/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4724096_61a4_5.jpg",
+        "duration": "1.5 total hours",
+        "enrolledStudentsCount": "20,544 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "All digital specialists who want to get certified to prove their experience",
+          "Digital marketers",
+          "Web Analytics Specialists",
+          "SEO specialists"
+        ],
+        "tags": [
+          "Marketing",
+          "Marketing Analytics \u0026 Automation",
+          "Google Analytics Individual Qualification (IQ)"
+        ],
+        "rating": {
+          "count": 107,
+          "averageValue": "4.1"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "GA1404",
+        "originalPrice": "\u20B9799",
+        "discountedPrice": "\u20B9389",
+        "expirationText": "\uD83E\uDD37\u200D\u2640",
+        "discountPercentage": 51
+      }
+    },
+    "https://www.udemy.com/course/facebook-ads-run-your-first-ad-campaign/": {
+      "courseDetails": {
+        "courseId": 5049774,
+        "title": "Facebook Ads: Run Your First Ad Campaign",
+        "shortDescription": "Get started with Facebook Ads and launch effective campaigns to reach new customers and grow your business",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/facebook-ads-run-your-first-ad-campaign/",
+        "imageUri": "https://img-b.udemycdn.com/course/750x422/5049774_4011.jpg",
+        "duration": "1 total hour",
+        "enrolledStudentsCount": "15,159 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Everyone who wants to promote their projects on Facebook",
+          "Marketers - this course will allow you to expand your skills and teach you how to promote your projects with Facebook Ads. You will acquire the necessary knowledge to further your career.",
+          "Entrepreneurs - Entrepreneurs will be able to use the acquired skills to promote their own projects on the internet. Learn how to create, optimize and analyze advertising campaigns, increase sales, targeted traffic, and leads"
+        ],
+        "tags": [
+          "Marketing",
+          "Social Media Marketing",
+          "Facebook Ads"
+        ],
+        "rating": {
+          "count": 93,
+          "averageValue": "4.2"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "FB1404",
+        "originalPrice": "\u20B9799",
+        "discountedPrice": "\u20B9389",
+        "expirationText": "\uD83E\uDD37\u200D\u2640",
+        "discountPercentage": 51
+      }
+    },
+    "https://www.udemy.com/course/cold-marketing-strategy/": {
+      "courseDetails": {
+        "courseId": 4989860,
+        "title": "Build Your Best Cold Email Strategy!",
+        "shortDescription": "Set up an effective cold email campaign that will help you increase open rates and conversions!",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/cold-marketing-strategy/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/4989860_36d3.jpg",
+        "duration": "1 hour",
+        "enrolledStudentsCount": "5,564 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "B2B sales managers who want to create first cold email campaign from scratch",
+          "All specialists who are willing to learn how to use cold emails for link building, sales, lead generation, brand awareness,etc.",
+          "Business owners who need to use cold emails for acquiring new clients and networking"
+        ],
+        "tags": [
+          "Business",
+          "Sales",
+          "Cold Email"
+        ],
+        "rating": {
+          "count": 30,
+          "averageValue": "4.7"
+        },
+        "instructors": [
+          {
+            "name": "Anton Voroniuk",
+            "url": "/user/woronyuk/",
+            "totalNumberOfStudents": 433573,
+            "totalNumberOfReviews": 10970,
+            "averageRating": 4.423049882035929
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": false,
+      "couponData": {
+        "couponCode": "COLD1404",
+        "originalPrice": "\u20B9799",
+        "discountedPrice": "\u20B9389",
+        "expirationText": "\uD83E\uDD37\u200D\u2640",
+        "discountPercentage": 51
+      }
+    }
+  },
+  "freeCourses": {
+    "https://www.udemy.com/course/fastapi-tutorial/": {
+      "courseDetails": {
+        "courseId": 5305860,
+        "title": "FastAPI Prerequisites: Pydantic, Dependency Injection",
+        "shortDescription": "Bare minimum requirements for getting started with FastAPI. Pydantic, SQLAlchemy, Async Python, Dependency Injection",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/fastapi-tutorial/",
+        "imageUri": "https://img-b.udemycdn.com/course/750x422/5305860_515b_3.jpg",
+        "duration": "0",
+        "enrolledStudentsCount": "134 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Beginners who want to get started with FastAPI"
+        ],
+        "tags": [
+          "Development",
+          "Software Engineering",
+          "FastAPI"
+        ],
+        "rating": null,
+        "instructors": [
+          {
+            "name": "Sourabh Sinha",
+            "url": "/user/sourabh-sinha-7/",
+            "totalNumberOfStudents": 6793,
+            "totalNumberOfReviews": 254,
+            "averageRating": 4.322641
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": true,
+      "couponData": null
+    },
+    "https://www.udemy.com/course/keycloak-integration-with-spring-boot-3/": {
+      "courseDetails": {
+        "courseId": 5292362,
+        "title": "Keycloak integration with Spring Boot 3",
+        "shortDescription": "Quick and easy integration of Keycloak with Spring Boot 3",
+        "longDescription": null,
+        "language": "English",
+        "courseUri": "https://www.udemy.com/course/keycloak-integration-with-spring-boot-3/",
+        "imageUri": "https://img-c.udemycdn.com/course/750x422/5292362_0676_2.jpg",
+        "duration": "0",
+        "enrolledStudentsCount": "168 students",
+        "lastUpdated": null,
+        "targetAudiences": [
+          "Java developers interested in integrating Keycloak as an IAM solution in their Spring Boot 3 App"
+        ],
+        "tags": [
+          "Development",
+          "Web Development"
+        ],
+        "rating": {
+          "count": 3,
+          "averageValue": "5.0"
+        },
+        "instructors": [
+          {
+            "name": "Maxim Ovidiu",
+            "url": "/user/maxim-ovidiu-2/",
+            "totalNumberOfStudents": 168,
+            "totalNumberOfReviews": 3,
+            "averageRating": 5
+          }
+        ]
+      },
+      "isAlreadyAFreeCourse": true,
+      "couponData": null
+    }
+  }
+}
